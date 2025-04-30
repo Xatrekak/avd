@@ -68,6 +68,13 @@ class MlagMixin(Protocol):
         return self.node_config.mlag_peer_l3_ipv4_pool
 
     @cached_property
+    def mlag_peer_l3_ipv6_pool(self: SharedUtilsProtocol) -> str:
+        if not self.node_config.mlag_peer_l3_ipv6_pool:
+            msg = "mlag_peer_l3_ipv6_pool"
+            raise AristaAvdMissingVariableError(msg)
+        return self.node_config.mlag_peer_l3_ipv6_pool
+
+    @cached_property
     def mlag_role(self: SharedUtilsProtocol) -> Literal["primary", "secondary"] | None:
         if self.mlag and self.node_group_is_primary_and_peer_hostname is not None:
             return "primary" if self.node_group_is_primary_and_peer_hostname[0] else "secondary"

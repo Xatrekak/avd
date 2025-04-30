@@ -138,6 +138,17 @@ class AvdIpAddressingProtocol(UtilsMixin, AvdFactsProtocol, Protocol):
 
         Default pool is "mlag_peer_l3_ipv4_pool"
         """
+        if self.shared_utils.underlay_ipv6_numbered:
+            if template_path := self.shared_utils.node_type_key_data.ip_addressing.mlag_l3_ip_primary:
+                return self._template(
+                    template_path,
+                    mlag_primary_id=self._mlag_primary_id,
+                    mlag_secondary_id=self._mlag_secondary_id,
+                    switch_data={"combined": {"mlag_peer_l3_ipv6_pool": self._mlag_peer_l3_ipv6_pool}},
+                )
+
+            return self._mlag_ip(self._mlag_peer_l3_ipv6_pool, 0, address_family="ipv6")
+
         if template_path := self.shared_utils.node_type_key_data.ip_addressing.mlag_l3_ip_primary:
             return self._template(
                 template_path,
@@ -154,6 +165,17 @@ class AvdIpAddressingProtocol(UtilsMixin, AvdFactsProtocol, Protocol):
 
         Default pool is "mlag_peer_l3_ipv4_pool"
         """
+        if self.shared_utils.underlay_ipv6_numbered:
+            if template_path := self.shared_utils.node_type_key_data.ip_addressing.mlag_l3_ip_secondary:
+                return self._template(
+                    template_path,
+                    mlag_primary_id=self._mlag_primary_id,
+                    mlag_secondary_id=self._mlag_secondary_id,
+                    switch_data={"combined": {"mlag_peer_l3_ipv6_pool": self._mlag_peer_l3_ipv6_pool}},
+                )
+
+            return self._mlag_ip(self._mlag_peer_l3_ipv6_pool, 1, address_family="ipv6")
+
         if template_path := self.shared_utils.node_type_key_data.ip_addressing.mlag_l3_ip_secondary:
             return self._template(
                 template_path,
@@ -184,6 +206,26 @@ class AvdIpAddressingProtocol(UtilsMixin, AvdFactsProtocol, Protocol):
 
         return get_ip_from_pool(p2p_ipv4_pool, prefixlen, offset, 1)
 
+    def p2p_uplinks_ipv6(self, uplink_switch_index: int) -> str:
+        """Return Child IP for P2P Uplinks."""
+        uplink_switch_index = int(uplink_switch_index)
+        if template_path := self.shared_utils.node_type_key_data.ip_addressing.p2p_uplinks_ip:
+            return self._template(
+                template_path,
+                uplink_switch_index=uplink_switch_index,
+                switch={
+                    "uplink_ipv6_pool": self._uplink_ipv6_pool,
+                    "id": self._id,
+                    "max_uplink_switches": self._max_uplink_switches,
+                    "max_parallel_uplinks": self._max_parallel_uplinks,
+                },
+            )
+
+        prefixlen = self.inputs.fabric_ip_addressing.p2p_uplinks.ipv6_prefix_length
+        p2p_ipv6_pool, offset = self._get_p2p_ipv6_pool_and_offset(uplink_switch_index)
+
+        return get_ip_from_pool(p2p_ipv6_pool, prefixlen, offset, 1)
+
     def p2p_uplinks_peer_ip(self, uplink_switch_index: int) -> str:
         """Return Parent IP for P2P Uplinks."""
         uplink_switch_index = int(uplink_switch_index)
@@ -203,6 +245,26 @@ class AvdIpAddressingProtocol(UtilsMixin, AvdFactsProtocol, Protocol):
         p2p_ipv4_pool, offset = self._get_p2p_ipv4_pool_and_offset(uplink_switch_index)
 
         return get_ip_from_pool(p2p_ipv4_pool, prefixlen, offset, 0)
+
+    def p2p_uplinks_peer_ipv6(self, uplink_switch_index: int) -> str:
+        """Return Parent IP for P2P Uplinks."""
+        uplink_switch_index = int(uplink_switch_index)
+        if template_path := self.shared_utils.node_type_key_data.ip_addressing.p2p_uplinks_peer_ip:
+            return self._template(
+                template_path,
+                uplink_switch_index=uplink_switch_index,
+                switch={
+                    "uplink_ipv4_pool": self._uplink_ipv6_pool,
+                    "id": self._id,
+                    "max_uplink_switches": self._max_uplink_switches,
+                    "max_parallel_uplinks": self._max_parallel_uplinks,
+                },
+            )
+
+        prefixlen = self.inputs.fabric_ip_addressing.p2p_uplinks.ipv6_prefix_length
+        p2p_ipv6_pool, offset = self._get_p2p_ipv6_pool_and_offset(uplink_switch_index)
+
+        return get_ip_from_pool(p2p_ipv6_pool, prefixlen, offset, 0)
 
     def p2p_vrfs_uplinks_ip(
         self,
@@ -239,6 +301,9 @@ class AvdIpAddressingProtocol(UtilsMixin, AvdFactsProtocol, Protocol):
         if self._loopback_ipv4_address:
             return self._loopback_ipv4_address
 
+        if self.inputs.underlay_ipv6_numbered:
+            return None
+
         if template_path := self.shared_utils.node_type_key_data.ip_addressing.router_id:
             return self._template(
                 template_path,
@@ -271,6 +336,9 @@ class AvdIpAddressingProtocol(UtilsMixin, AvdFactsProtocol, Protocol):
         if self._vtep_loopback_ipv4_address:
             return self._vtep_loopback_ipv4_address
 
+        if self.inputs.underlay_ipv6_numbered:
+            return None
+
         if template_path := self.shared_utils.node_type_key_data.ip_addressing.vtep_ip_mlag:
             return self._template(
                 template_path,
@@ -294,6 +362,9 @@ class AvdIpAddressingProtocol(UtilsMixin, AvdFactsProtocol, Protocol):
         """
         if self._vtep_loopback_ipv4_address:
             return self._vtep_loopback_ipv4_address
+
+        if self.inputs.underlay_ipv6_numbered:
+            return None
 
         if template_path := self.shared_utils.node_type_key_data.ip_addressing.vtep_ip:
             return self._template(

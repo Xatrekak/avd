@@ -26,10 +26,17 @@ class EosDesignsFactsProtocol(Protocol):
 
         DownlinkInterfaces._item_type = str
 
-        _fields: ClassVar[dict] = {"ipv4_pool": {"type": str}, "downlink_interfaces": {"type": DownlinkInterfaces}}
+        _fields: ClassVar[dict] = {"ipv4_pool": {"type": str}, "ipv6_pool": {"type": str}, "downlink_interfaces": {"type": DownlinkInterfaces}}
         ipv4_pool: str | None
         """
         Comma separated list of prefixes (IPv4 address/Mask) or ranges (IPv4_address-IPv4_address).
+        IPv4
+        subnets used for links to downlink switches will be derived from this pool based on index the peer's
+        uplink interface's index in 'downlink_interfaces'.
+        """
+        ipv6_pool: str | None
+        """
+        Comma separated list of prefixes (IPv6 address/Mask) or ranges (IPv6_address-IPv4_address).
         IPv4
         subnets used for links to downlink switches will be derived from this pool based on index the peer's
         uplink interface's index in 'downlink_interfaces'.
@@ -46,7 +53,11 @@ class EosDesignsFactsProtocol(Protocol):
         if TYPE_CHECKING:
 
             def __init__(
-                self, *, ipv4_pool: str | None | UndefinedType = Undefined, downlink_interfaces: DownlinkInterfaces | UndefinedType = Undefined
+                self,
+                *,
+                ipv4_pool: str | None | UndefinedType = Undefined,
+                ipv6_pool: str | None | UndefinedType = Undefined,
+                downlink_interfaces: DownlinkInterfaces | UndefinedType = Undefined,
             ) -> None:
                 """
                 DownlinkPoolsItem.
@@ -57,6 +68,11 @@ class EosDesignsFactsProtocol(Protocol):
                 Args:
                     ipv4_pool:
                        Comma separated list of prefixes (IPv4 address/Mask) or ranges (IPv4_address-IPv4_address).
+                       IPv4
+                       subnets used for links to downlink switches will be derived from this pool based on index the peer's
+                       uplink interface's index in 'downlink_interfaces'.
+                    ipv6_pool:
+                       Comma separated list of prefixes (IPv6 address/Mask) or ranges (IPv6_address-IPv4_address).
                        IPv4
                        subnets used for links to downlink switches will be derived from this pool based on index the peer's
                        uplink interface's index in 'downlink_interfaces'.
@@ -911,6 +927,7 @@ class EosDesignsFactsProtocol(Protocol):
         "evpn_multicast": {"type": bool},
         "loopback_ipv4_pool": {"type": str},
         "uplink_ipv4_pool": {"type": str},
+        "uplink_ipv6_pool": {"type": str},
         "downlink_pools": {"type": DownlinkPools},
         "bgp_as": {"type": str},
         "underlay_routing_protocol": {"type": str},
@@ -967,6 +984,7 @@ class EosDesignsFactsProtocol(Protocol):
     evpn_multicast: bool | None
     loopback_ipv4_pool: str | None
     uplink_ipv4_pool: str | None
+    uplink_ipv6_pool: str | None
     downlink_pools: DownlinkPools
     """
     IPv4 pools used for links to downlink switches. Set this on the parent switch. Cannot be combined
@@ -1128,6 +1146,7 @@ class EosDesignsFactsProtocol(Protocol):
             evpn_multicast: bool | None | UndefinedType = Undefined,
             loopback_ipv4_pool: str | None | UndefinedType = Undefined,
             uplink_ipv4_pool: str | None | UndefinedType = Undefined,
+            uplink_ipv6_pool: str | None | UndefinedType = Undefined,
             downlink_pools: DownlinkPools | UndefinedType = Undefined,
             bgp_as: str | None | UndefinedType = Undefined,
             underlay_routing_protocol: str | UndefinedType = Undefined,
@@ -1191,6 +1210,7 @@ class EosDesignsFactsProtocol(Protocol):
                 evpn_multicast: evpn_multicast
                 loopback_ipv4_pool: loopback_ipv4_pool
                 uplink_ipv4_pool: uplink_ipv4_pool
+                uplink_ipv6_pool: uplink_ipv6_pool
                 downlink_pools:
                    IPv4 pools used for links to downlink switches. Set this on the parent switch. Cannot be combined
                    with `uplink_ipv4_pool` set on the downlink switch.

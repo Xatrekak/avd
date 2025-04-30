@@ -18,8 +18,10 @@
     | [<samp>evpn_multicast</samp>](## "evpn_multicast") | Boolean |  |  |  |  |
     | [<samp>loopback_ipv4_pool</samp>](## "loopback_ipv4_pool") | String |  |  |  |  |
     | [<samp>uplink_ipv4_pool</samp>](## "uplink_ipv4_pool") | String |  |  |  |  |
+    | [<samp>uplink_ipv6_pool</samp>](## "uplink_ipv6_pool") | String |  |  |  |  |
     | [<samp>downlink_pools</samp>](## "downlink_pools") | List, items: Dictionary |  |  |  | IPv4 pools used for links to downlink switches. Set this on the parent switch. Cannot be combined with `uplink_ipv4_pool` set on the downlink switch. |
     | [<samp>&nbsp;&nbsp;-&nbsp;ipv4_pool</samp>](## "downlink_pools.[].ipv4_pool") | String |  |  | Format: ipv4_pool | Comma separated list of prefixes (IPv4 address/Mask) or ranges (IPv4_address-IPv4_address).<br>IPv4 subnets used for links to downlink switches will be derived from this pool based on index the peer's uplink interface's index in 'downlink_interfaces'. |
+    | [<samp>&nbsp;&nbsp;&nbsp;&nbsp;ipv6_pool</samp>](## "downlink_pools.[].ipv6_pool") | String |  |  | Format: ipv6_pool | Comma separated list of prefixes (IPv6 address/Mask) or ranges (IPv6_address-IPv4_address).<br>IPv4 subnets used for links to downlink switches will be derived from this pool based on index the peer's uplink interface's index in 'downlink_interfaces'. |
     | [<samp>&nbsp;&nbsp;&nbsp;&nbsp;downlink_interfaces</samp>](## "downlink_pools.[].downlink_interfaces") | List, items: String |  |  |  | List of downlink interfaces or ranges of interfaces to use this pool. The index of the interface in this list will determine which subnet will be taken from the pool. |
     | [<samp>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;&lt;str&gt;</samp>](## "downlink_pools.[].downlink_interfaces.[]") | String |  |  |  |  |
     | [<samp>bgp_as</samp>](## "bgp_as") | String |  |  |  |  |
@@ -175,6 +177,7 @@
     evpn_multicast: <bool>
     loopback_ipv4_pool: <str>
     uplink_ipv4_pool: <str>
+    uplink_ipv6_pool: <str>
 
     # IPv4 pools used for links to downlink switches. Set this on the parent switch. Cannot be combined with `uplink_ipv4_pool` set on the downlink switch.
     downlink_pools:
@@ -182,6 +185,10 @@
         # Comma separated list of prefixes (IPv4 address/Mask) or ranges (IPv4_address-IPv4_address).
         # IPv4 subnets used for links to downlink switches will be derived from this pool based on index the peer's uplink interface's index in 'downlink_interfaces'.
       - ipv4_pool: <str>
+
+        # Comma separated list of prefixes (IPv6 address/Mask) or ranges (IPv6_address-IPv4_address).
+        # IPv4 subnets used for links to downlink switches will be derived from this pool based on index the peer's uplink interface's index in 'downlink_interfaces'.
+        ipv6_pool: <str>
 
         # List of downlink interfaces or ranges of interfaces to use this pool. The index of the interface in this list will determine which subnet will be taken from the pool.
         downlink_interfaces:
