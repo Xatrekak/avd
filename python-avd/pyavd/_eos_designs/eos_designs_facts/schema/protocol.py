@@ -926,6 +926,7 @@ class EosDesignsFactsProtocol(Protocol):
         "mpls_lsr": {"type": bool},
         "evpn_multicast": {"type": bool},
         "loopback_ipv4_pool": {"type": str},
+        "loopback_ipv6_pool": {"type": str},
         "uplink_ipv4_pool": {"type": str},
         "uplink_ipv6_pool": {"type": str},
         "downlink_pools": {"type": DownlinkPools},
@@ -941,6 +942,7 @@ class EosDesignsFactsProtocol(Protocol):
         "dc_name": {"type": str},
         "group": {"type": str},
         "router_id": {"type": str},
+        "ipv6_router_id": {"type": str},
         "inband_mgmt_ip": {"type": str},
         "inband_mgmt_interface": {"type": str},
         "pod": {"type": str},
@@ -983,6 +985,7 @@ class EosDesignsFactsProtocol(Protocol):
     mpls_lsr: bool
     evpn_multicast: bool | None
     loopback_ipv4_pool: str | None
+    loopback_ipv6_pool: str | None
     uplink_ipv4_pool: str | None
     uplink_ipv6_pool: str | None
     downlink_pools: DownlinkPools
@@ -1005,6 +1008,7 @@ class EosDesignsFactsProtocol(Protocol):
     dc_name: str | None
     group: str | None
     router_id: str | None
+    ipv6_router_id: str | None
     inband_mgmt_ip: str | None
     """Used for fabric docs."""
     inband_mgmt_interface: str | None
@@ -1145,6 +1149,7 @@ class EosDesignsFactsProtocol(Protocol):
             mpls_lsr: bool | UndefinedType = Undefined,
             evpn_multicast: bool | None | UndefinedType = Undefined,
             loopback_ipv4_pool: str | None | UndefinedType = Undefined,
+            loopback_ipv6_pool: str | None | UndefinedType = Undefined,
             uplink_ipv4_pool: str | None | UndefinedType = Undefined,
             uplink_ipv6_pool: str | None | UndefinedType = Undefined,
             downlink_pools: DownlinkPools | UndefinedType = Undefined,
@@ -1160,6 +1165,7 @@ class EosDesignsFactsProtocol(Protocol):
             dc_name: str | None | UndefinedType = Undefined,
             group: str | None | UndefinedType = Undefined,
             router_id: str | None | UndefinedType = Undefined,
+            ipv6_router_id: str | None | UndefinedType = Undefined,
             inband_mgmt_ip: str | None | UndefinedType = Undefined,
             inband_mgmt_interface: str | None | UndefinedType = Undefined,
             pod: str | UndefinedType = Undefined,
@@ -1209,6 +1215,7 @@ class EosDesignsFactsProtocol(Protocol):
                 mpls_lsr: mpls_lsr
                 evpn_multicast: evpn_multicast
                 loopback_ipv4_pool: loopback_ipv4_pool
+                loopback_ipv6_pool: loopback_ipv6_pool
                 uplink_ipv4_pool: uplink_ipv4_pool
                 uplink_ipv6_pool: uplink_ipv6_pool
                 downlink_pools:
@@ -1229,6 +1236,7 @@ class EosDesignsFactsProtocol(Protocol):
                 dc_name: dc_name
                 group: group
                 router_id: router_id
+                ipv6_router_id: ipv6_router_id
                 inband_mgmt_ip: Used for fabric docs.
                 inband_mgmt_interface: Used for fabric docs.
                 pod: Used for fabric docs.

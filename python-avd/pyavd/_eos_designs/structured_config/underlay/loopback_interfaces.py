@@ -43,7 +43,10 @@ class LoopbackInterfacesMixin(Protocol):
             ip_address=f"{self.shared_utils.router_id}/32",
         )
 
-        if self.shared_utils.ipv6_router_id is not None:
+        if self.inputs.underlay_ipv6_numbered:
+            del loopback0.ip_address
+            loopback0.ipv6_address = f"{self.shared_utils.ipv6_router_id}/{self.shared_utils.loopback_ipv6_prefix_length}"
+        elif self.shared_utils.ipv6_router_id is not None:
             loopback0.ipv6_address = f"{self.shared_utils.ipv6_router_id}/128"
 
         if self.shared_utils.underlay_ospf:
@@ -78,6 +81,10 @@ class LoopbackInterfacesMixin(Protocol):
                 shutdown=False,
                 ip_address=f"{self.shared_utils.vtep_ip}/32",
             )
+
+            if self.inputs.underlay_ipv6_numbered:
+                del vtep_loopback.ip_address
+                vtep_loopback.ipv6_address = f"{self.shared_utils.vtep_ipv6}/{self.shared_utils.loopback_ipv6_prefix_length}"
 
             if self.shared_utils.network_services_l3 is True and self.inputs.vtep_vvtep_ip is not None:
                 vtep_loopback.ip_address_secondaries.append_new(self.inputs.vtep_vvtep_ip)

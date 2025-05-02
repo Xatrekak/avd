@@ -133,6 +133,14 @@ class EosDesignsFactsGeneratorProtocol(
 
     @remove_cached_property_type
     @cached_property
+    def loopback_ipv6_pool(self) -> str | None:
+        """Exposed in avd_switch_facts."""
+        if self.shared_utils.underlay_router:
+            return self.shared_utils.loopback_ipv6_pool
+        return None
+
+    @remove_cached_property_type
+    @cached_property
     def uplink_ipv4_pool(self) -> str | None:
         """Exposed in avd_switch_facts."""
         if self.shared_utils.underlay_router:

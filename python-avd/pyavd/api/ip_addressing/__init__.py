@@ -254,7 +254,7 @@ class AvdIpAddressingProtocol(UtilsMixin, AvdFactsProtocol, Protocol):
                 template_path,
                 uplink_switch_index=uplink_switch_index,
                 switch={
-                    "uplink_ipv4_pool": self._uplink_ipv6_pool,
+                    "uplink_ipv6_pool": self._uplink_ipv6_pool,
                     "id": self._id,
                     "max_uplink_switches": self._max_uplink_switches,
                     "max_parallel_uplinks": self._max_parallel_uplinks,
@@ -278,6 +278,18 @@ class AvdIpAddressingProtocol(UtilsMixin, AvdFactsProtocol, Protocol):
         """
         return self.p2p_uplinks_ip(uplink_switch_index)
 
+    def p2p_vrfs_uplinks_ipv6(
+        self,
+        uplink_switch_index: int,
+        vrf: str,  # pylint: disable=unused-argument # NOSONAR # noqa: ARG002
+    ) -> str:
+        """
+        Return Child IP for P2P-VRFs Uplinks.
+
+        Unless overridden in a custom IP addressing module, this will just reuse the regular ip addressing logic.
+        """
+        return self.p2p_uplinks_ipv6(uplink_switch_index)
+
     def p2p_vrfs_uplinks_peer_ip(
         self,
         uplink_switch_index: int,
@@ -290,6 +302,18 @@ class AvdIpAddressingProtocol(UtilsMixin, AvdFactsProtocol, Protocol):
         """
         return self.p2p_uplinks_peer_ip(uplink_switch_index)
 
+    def p2p_vrfs_uplinks_peer_ipv6(
+        self,
+        uplink_switch_index: int,
+        vrf: str,  # pylint: disable=unused-argument # NOSONAR # noqa: ARG002
+    ) -> str:
+        """
+        Return Parent IP for P2P-VRFs Uplinks.
+
+        Unless overridden in a custom IP addressing module, this will just reuse the regular ip addressing logic.
+        """
+        return self.p2p_uplinks_peer_ipv6(uplink_switch_index)
+
     def router_id(self) -> str:
         """
         Return IP address for Router ID.
@@ -301,8 +325,18 @@ class AvdIpAddressingProtocol(UtilsMixin, AvdFactsProtocol, Protocol):
         if self._loopback_ipv4_address:
             return self._loopback_ipv4_address
 
-        if self.inputs.underlay_ipv6_numbered:
-            return None
+
+        if self.shared_utils.underlay_ipv6_numbered:
+            if template_path := self.shared_utils.node_type_key_data.ip_addressing.router_id:
+                return self._template(
+                    template_path,
+                    switch_id=self._id,
+                    loopback_ipv4_pool=self._router_id_pool,
+                    loopback_ipv4_offset=self._loopback_ipv4_offset,
+                )
+
+            offset = self._id + self._loopback_ipv4_offset
+            return get_ip_from_pool(self._router_id_pool, 32, offset, 0)
 
         if template_path := self.shared_utils.node_type_key_data.ip_addressing.router_id:
             return self._template(
@@ -323,7 +357,7 @@ class AvdIpAddressingProtocol(UtilsMixin, AvdFactsProtocol, Protocol):
         Default offset from pool is `id + loopback_ipv6_offset`
         """
         offset = self._id + self._loopback_ipv6_offset
-        return get_ip_from_pool(self._loopback_ipv6_pool, 128, offset, 0)
+        return get_ip_from_pool(self._loopback_ipv6_pool, self.shared_utils.loopback_ipv6_prefix_length, offset, 0)
 
     def vtep_ip_mlag(self) -> str:
         """
@@ -351,6 +385,30 @@ class AvdIpAddressingProtocol(UtilsMixin, AvdFactsProtocol, Protocol):
 
         offset = self._mlag_primary_id + self._loopback_ipv4_offset
         return get_ip_from_pool(self._vtep_loopback_ipv4_pool, 32, offset, 0)
+
+    def vtep_ipv6_mlag(self) -> str:
+        """
+        Return IP address for VTEP for MLAG Leaf.
+
+        If "vtep_loopback_ipv4_address" is set, it is used.
+        Default pool is "vtep_loopback_ipv4_pool"
+        Default offset from pool is `mlag_primary_id + loopback_ipv4_offset`
+        """
+        if self._vtep_loopback_ipv6_address:
+            return self._vtep_loopback_ipv6_address
+
+        if template_path := self.shared_utils.node_type_key_data.ip_addressing.vtep_ipv6_mlag:
+            return self._template(
+                template_path,
+                switch_id=self._id,
+                switch_vtep_loopback_ipv6_pool=self._vtep_loopback_ipv6_pool,
+                loopback_ipv6_offset=self._loopback_ipv6_offset,
+                mlag_primary_id=self._mlag_primary_id,
+                mlag_secondary_id=self._mlag_secondary_id,
+            )
+
+        offset = self._mlag_primary_id + self._loopback_ipv6_offset
+        return get_ip_from_pool(self._vtep_loopback_ipv6_pool, 64, offset, 0)
 
     def vtep_ip(self) -> str:
         """

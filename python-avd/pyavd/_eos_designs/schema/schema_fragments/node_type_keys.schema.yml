@@ -231,6 +231,9 @@ keys:
             vtep_ip_mlag:
               type: str
               description: Path to Custom J2 template.
+            vtep_ipv6_mlag:
+              type: str
+              description: Path to Custom J2 template.
             vtep_ip:
               type: str
               description: Path to Custom J2 template.

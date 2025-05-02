@@ -1581,7 +1581,7 @@ keys:
             description: IPv4 prefix length used for L3 point-to-point uplinks.
           ipv6_prefix_length:
             type: int
-            default: 127
+            default: 64
             min: 1
             max: 127
             convert_types:
@@ -2764,6 +2764,9 @@ keys:
               type: str
               description: Path to Custom J2 template.
             vtep_ip_mlag:
+              type: str
+              description: Path to Custom J2 template.
+            vtep_ipv6_mlag:
               type: str
               description: Path to Custom J2 template.
             vtep_ip:
@@ -6612,6 +6615,17 @@ $defs:
                   If not set, "mlag_peer_l3_ipv4_pool" or "mlag_peer_ipv4_pool" will
                   be used.'
                 format: ipv4_pool
+              mlag_ibgp_peering_ipv6_pool:
+                type: str
+                description: 'Comma separated list of prefixes (IPv6 address/Mask)
+                  or ranges (IPv6_address-IPv4_address).
+
+                  The subnet used for the iBGP peering in the VRF is derived from
+                  this pool based on the ID of the first MLAG switch.
+
+                  If not set, "mlag_peer_l3_ipv6_pool" or "mlag_peer_ipv6_pool" will
+                  be used.'
+                format: ipv6_pool
               ip_helpers:
                 type: list
                 primary_key: ip_helper
@@ -8732,7 +8746,8 @@ $defs:
           router_id_pool:
             documentation_options:
               table: node-type-loopback-vtep-configuration
-            description: IPv4 subnet for allocation router-id allocation.
+            description: IPv4 subnet for allocation router-id allocation. Only used
+              for IPv6 only underlays where there is no `loopback_ipv4_pool` set.
             type: str
             format: ipv4_pool
           loopback_ipv6_pool:

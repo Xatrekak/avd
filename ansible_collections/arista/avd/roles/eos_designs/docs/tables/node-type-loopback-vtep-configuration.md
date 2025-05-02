@@ -16,7 +16,7 @@
     | [<samp>&nbsp;&nbsp;&nbsp;&nbsp;vtep_loopback_ipv4_address</samp>](## "<node_type_keys.key>.defaults.vtep_loopback_ipv4_address") | String |  |  | Format: ipv4 | IPv4 address without mask for VTEP-Loopback.<br>When set, it takes precedence over `vtep_loopback_ipv4_pool`.<br>Note: AVD does not check for validity of the IPv4 address and does not catch duplicates. |
     | [<samp>&nbsp;&nbsp;&nbsp;&nbsp;vtep_loopback_ipv6_address</samp>](## "<node_type_keys.key>.defaults.vtep_loopback_ipv6_address") | String |  |  | Format: ipv6 | IPv6 address without mask for VTEP-Loopback.<br>When set, it takes precedence over `vtep_loopback_ipv6_pool`.<br>Note: AVD does not check for validity of the IPv6 address and does not catch duplicates. |
     | [<samp>&nbsp;&nbsp;&nbsp;&nbsp;loopback_ipv4_offset</samp>](## "<node_type_keys.key>.defaults.loopback_ipv4_offset") | Integer |  | `0` |  | Offset all assigned loopback IP addresses.<br>Required when the 'loopback_ipv4_pool' is the same for 2 different node_types (like spine and l3leaf) to avoid overlapping IPs.<br>For example, set the minimum offset l3leaf.defaults.loopback_ipv4_offset: < total # spine switches > or vice versa.<br> |
-    | [<samp>&nbsp;&nbsp;&nbsp;&nbsp;router_id_pool</samp>](## "<node_type_keys.key>.defaults.router_id_pool") | String |  |  | Format: ipv4_pool | IPv4 subnet for allocation router-id allocation. |
+    | [<samp>&nbsp;&nbsp;&nbsp;&nbsp;router_id_pool</samp>](## "<node_type_keys.key>.defaults.router_id_pool") | String |  |  | Format: ipv4_pool | IPv4 subnet for allocation router-id allocation. Only used for IPv6 only underlays where there is no `loopback_ipv4_pool` set. |
     | [<samp>&nbsp;&nbsp;&nbsp;&nbsp;loopback_ipv6_pool</samp>](## "<node_type_keys.key>.defaults.loopback_ipv6_pool") | String |  |  | Format: ipv6_pool | Comma separated list of prefixes (IPv6 address/Mask) or ranges (IPv6_address-IPv6_address). The IPv6 address used for Loopback0 will be derived from this pool based on the node id and 'loopback_ipv6_offset'. |
     | [<samp>&nbsp;&nbsp;&nbsp;&nbsp;loopback_ipv6_prefix_length</samp>](## "<node_type_keys.key>.defaults.loopback_ipv6_prefix_length") | Integer |  | `128` | Valid Values:<br>- <code>64</code><br>- <code>128</code> | IPv6 prefix length used for loopbacks |
     | [<samp>&nbsp;&nbsp;&nbsp;&nbsp;loopback_ipv6_offset</samp>](## "<node_type_keys.key>.defaults.loopback_ipv6_offset") | Integer |  | `0` |  | Offset all assigned loopback IPv6 addresses.<br>Required when the 'loopback_ipv6_pool' is same for 2 different node_types (like spine and l3leaf) to avoid overlapping IPs.<br>For example, set the minimum offset l3leaf.defaults.loopback_ipv6_offset: < total # spine switches > or vice versa.<br> |
@@ -33,7 +33,7 @@
     | [<samp>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vtep_loopback_ipv4_address</samp>](## "<node_type_keys.key>.node_groups.[].nodes.[].vtep_loopback_ipv4_address") | String |  |  | Format: ipv4 | IPv4 address without mask for VTEP-Loopback.<br>When set, it takes precedence over `vtep_loopback_ipv4_pool`.<br>Note: AVD does not check for validity of the IPv4 address and does not catch duplicates. |
     | [<samp>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vtep_loopback_ipv6_address</samp>](## "<node_type_keys.key>.node_groups.[].nodes.[].vtep_loopback_ipv6_address") | String |  |  | Format: ipv6 | IPv6 address without mask for VTEP-Loopback.<br>When set, it takes precedence over `vtep_loopback_ipv6_pool`.<br>Note: AVD does not check for validity of the IPv6 address and does not catch duplicates. |
     | [<samp>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;loopback_ipv4_offset</samp>](## "<node_type_keys.key>.node_groups.[].nodes.[].loopback_ipv4_offset") | Integer |  | `0` |  | Offset all assigned loopback IP addresses.<br>Required when the 'loopback_ipv4_pool' is the same for 2 different node_types (like spine and l3leaf) to avoid overlapping IPs.<br>For example, set the minimum offset l3leaf.defaults.loopback_ipv4_offset: < total # spine switches > or vice versa.<br> |
-    | [<samp>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;router_id_pool</samp>](## "<node_type_keys.key>.node_groups.[].nodes.[].router_id_pool") | String |  |  | Format: ipv4_pool | IPv4 subnet for allocation router-id allocation. |
+    | [<samp>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;router_id_pool</samp>](## "<node_type_keys.key>.node_groups.[].nodes.[].router_id_pool") | String |  |  | Format: ipv4_pool | IPv4 subnet for allocation router-id allocation. Only used for IPv6 only underlays where there is no `loopback_ipv4_pool` set. |
     | [<samp>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;loopback_ipv6_pool</samp>](## "<node_type_keys.key>.node_groups.[].nodes.[].loopback_ipv6_pool") | String |  |  | Format: ipv6_pool | Comma separated list of prefixes (IPv6 address/Mask) or ranges (IPv6_address-IPv6_address). The IPv6 address used for Loopback0 will be derived from this pool based on the node id and 'loopback_ipv6_offset'. |
     | [<samp>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;loopback_ipv6_prefix_length</samp>](## "<node_type_keys.key>.node_groups.[].nodes.[].loopback_ipv6_prefix_length") | Integer |  | `128` | Valid Values:<br>- <code>64</code><br>- <code>128</code> | IPv6 prefix length used for loopbacks |
     | [<samp>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;loopback_ipv6_offset</samp>](## "<node_type_keys.key>.node_groups.[].nodes.[].loopback_ipv6_offset") | Integer |  | `0` |  | Offset all assigned loopback IPv6 addresses.<br>Required when the 'loopback_ipv6_pool' is same for 2 different node_types (like spine and l3leaf) to avoid overlapping IPs.<br>For example, set the minimum offset l3leaf.defaults.loopback_ipv6_offset: < total # spine switches > or vice versa.<br> |
@@ -46,7 +46,7 @@
     | [<samp>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vtep_loopback_ipv4_address</samp>](## "<node_type_keys.key>.node_groups.[].vtep_loopback_ipv4_address") | String |  |  | Format: ipv4 | IPv4 address without mask for VTEP-Loopback.<br>When set, it takes precedence over `vtep_loopback_ipv4_pool`.<br>Note: AVD does not check for validity of the IPv4 address and does not catch duplicates. |
     | [<samp>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vtep_loopback_ipv6_address</samp>](## "<node_type_keys.key>.node_groups.[].vtep_loopback_ipv6_address") | String |  |  | Format: ipv6 | IPv6 address without mask for VTEP-Loopback.<br>When set, it takes precedence over `vtep_loopback_ipv6_pool`.<br>Note: AVD does not check for validity of the IPv6 address and does not catch duplicates. |
     | [<samp>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;loopback_ipv4_offset</samp>](## "<node_type_keys.key>.node_groups.[].loopback_ipv4_offset") | Integer |  | `0` |  | Offset all assigned loopback IP addresses.<br>Required when the 'loopback_ipv4_pool' is the same for 2 different node_types (like spine and l3leaf) to avoid overlapping IPs.<br>For example, set the minimum offset l3leaf.defaults.loopback_ipv4_offset: < total # spine switches > or vice versa.<br> |
-    | [<samp>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;router_id_pool</samp>](## "<node_type_keys.key>.node_groups.[].router_id_pool") | String |  |  | Format: ipv4_pool | IPv4 subnet for allocation router-id allocation. |
+    | [<samp>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;router_id_pool</samp>](## "<node_type_keys.key>.node_groups.[].router_id_pool") | String |  |  | Format: ipv4_pool | IPv4 subnet for allocation router-id allocation. Only used for IPv6 only underlays where there is no `loopback_ipv4_pool` set. |
     | [<samp>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;loopback_ipv6_pool</samp>](## "<node_type_keys.key>.node_groups.[].loopback_ipv6_pool") | String |  |  | Format: ipv6_pool | Comma separated list of prefixes (IPv6 address/Mask) or ranges (IPv6_address-IPv6_address). The IPv6 address used for Loopback0 will be derived from this pool based on the node id and 'loopback_ipv6_offset'. |
     | [<samp>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;loopback_ipv6_prefix_length</samp>](## "<node_type_keys.key>.node_groups.[].loopback_ipv6_prefix_length") | Integer |  | `128` | Valid Values:<br>- <code>64</code><br>- <code>128</code> | IPv6 prefix length used for loopbacks |
     | [<samp>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;loopback_ipv6_offset</samp>](## "<node_type_keys.key>.node_groups.[].loopback_ipv6_offset") | Integer |  | `0` |  | Offset all assigned loopback IPv6 addresses.<br>Required when the 'loopback_ipv6_pool' is same for 2 different node_types (like spine and l3leaf) to avoid overlapping IPs.<br>For example, set the minimum offset l3leaf.defaults.loopback_ipv6_offset: < total # spine switches > or vice versa.<br> |
@@ -61,7 +61,7 @@
     | [<samp>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vtep_loopback_ipv4_address</samp>](## "<node_type_keys.key>.nodes.[].vtep_loopback_ipv4_address") | String |  |  | Format: ipv4 | IPv4 address without mask for VTEP-Loopback.<br>When set, it takes precedence over `vtep_loopback_ipv4_pool`.<br>Note: AVD does not check for validity of the IPv4 address and does not catch duplicates. |
     | [<samp>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vtep_loopback_ipv6_address</samp>](## "<node_type_keys.key>.nodes.[].vtep_loopback_ipv6_address") | String |  |  | Format: ipv6 | IPv6 address without mask for VTEP-Loopback.<br>When set, it takes precedence over `vtep_loopback_ipv6_pool`.<br>Note: AVD does not check for validity of the IPv6 address and does not catch duplicates. |
     | [<samp>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;loopback_ipv4_offset</samp>](## "<node_type_keys.key>.nodes.[].loopback_ipv4_offset") | Integer |  | `0` |  | Offset all assigned loopback IP addresses.<br>Required when the 'loopback_ipv4_pool' is the same for 2 different node_types (like spine and l3leaf) to avoid overlapping IPs.<br>For example, set the minimum offset l3leaf.defaults.loopback_ipv4_offset: < total # spine switches > or vice versa.<br> |
-    | [<samp>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;router_id_pool</samp>](## "<node_type_keys.key>.nodes.[].router_id_pool") | String |  |  | Format: ipv4_pool | IPv4 subnet for allocation router-id allocation. |
+    | [<samp>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;router_id_pool</samp>](## "<node_type_keys.key>.nodes.[].router_id_pool") | String |  |  | Format: ipv4_pool | IPv4 subnet for allocation router-id allocation. Only used for IPv6 only underlays where there is no `loopback_ipv4_pool` set. |
     | [<samp>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;loopback_ipv6_pool</samp>](## "<node_type_keys.key>.nodes.[].loopback_ipv6_pool") | String |  |  | Format: ipv6_pool | Comma separated list of prefixes (IPv6 address/Mask) or ranges (IPv6_address-IPv6_address). The IPv6 address used for Loopback0 will be derived from this pool based on the node id and 'loopback_ipv6_offset'. |
     | [<samp>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;loopback_ipv6_prefix_length</samp>](## "<node_type_keys.key>.nodes.[].loopback_ipv6_prefix_length") | Integer |  | `128` | Valid Values:<br>- <code>64</code><br>- <code>128</code> | IPv6 prefix length used for loopbacks |
     | [<samp>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;loopback_ipv6_offset</samp>](## "<node_type_keys.key>.nodes.[].loopback_ipv6_offset") | Integer |  | `0` |  | Offset all assigned loopback IPv6 addresses.<br>Required when the 'loopback_ipv6_pool' is same for 2 different node_types (like spine and l3leaf) to avoid overlapping IPs.<br>For example, set the minimum offset l3leaf.defaults.loopback_ipv6_offset: < total # spine switches > or vice versa.<br> |
@@ -106,7 +106,7 @@
         # For example, set the minimum offset l3leaf.defaults.loopback_ipv4_offset: < total # spine switches > or vice versa.
         loopback_ipv4_offset: <int; default=0>
 
-        # IPv4 subnet for allocation router-id allocation.
+        # IPv4 subnet for allocation router-id allocation. Only used for IPv6 only underlays where there is no `loopback_ipv4_pool` set.
         router_id_pool: <str>
 
         # Comma separated list of prefixes (IPv6 address/Mask) or ranges (IPv6_address-IPv6_address). The IPv6 address used for Loopback0 will be derived from this pool based on the node id and 'loopback_ipv6_offset'.
@@ -170,7 +170,7 @@
               # For example, set the minimum offset l3leaf.defaults.loopback_ipv4_offset: < total # spine switches > or vice versa.
               loopback_ipv4_offset: <int; default=0>
 
-              # IPv4 subnet for allocation router-id allocation.
+              # IPv4 subnet for allocation router-id allocation. Only used for IPv6 only underlays where there is no `loopback_ipv4_pool` set.
               router_id_pool: <str>
 
               # Comma separated list of prefixes (IPv6 address/Mask) or ranges (IPv6_address-IPv6_address). The IPv6 address used for Loopback0 will be derived from this pool based on the node id and 'loopback_ipv6_offset'.
@@ -221,7 +221,7 @@
           # For example, set the minimum offset l3leaf.defaults.loopback_ipv4_offset: < total # spine switches > or vice versa.
           loopback_ipv4_offset: <int; default=0>
 
-          # IPv4 subnet for allocation router-id allocation.
+          # IPv4 subnet for allocation router-id allocation. Only used for IPv6 only underlays where there is no `loopback_ipv4_pool` set.
           router_id_pool: <str>
 
           # Comma separated list of prefixes (IPv6 address/Mask) or ranges (IPv6_address-IPv6_address). The IPv6 address used for Loopback0 will be derived from this pool based on the node id and 'loopback_ipv6_offset'.
@@ -278,7 +278,7 @@
           # For example, set the minimum offset l3leaf.defaults.loopback_ipv4_offset: < total # spine switches > or vice versa.
           loopback_ipv4_offset: <int; default=0>
 
-          # IPv4 subnet for allocation router-id allocation.
+          # IPv4 subnet for allocation router-id allocation. Only used for IPv6 only underlays where there is no `loopback_ipv4_pool` set.
           router_id_pool: <str>
 
           # Comma separated list of prefixes (IPv6 address/Mask) or ranges (IPv6_address-IPv6_address). The IPv6 address used for Loopback0 will be derived from this pool based on the node id and 'loopback_ipv6_offset'.

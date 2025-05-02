@@ -3540,7 +3540,7 @@ class EosDesigns(EosDesignsRootModel):
         class P2pUplinks(AvdModel):
             """Subclass of AvdModel."""
 
-            _fields: ClassVar[dict] = {"ipv4_prefix_length": {"type": int, "default": 31}, "ipv6_prefix_length": {"type": int, "default": 127}}
+            _fields: ClassVar[dict] = {"ipv4_prefix_length": {"type": int, "default": 31}, "ipv6_prefix_length": {"type": int, "default": 64}}
             ipv4_prefix_length: int
             """
             IPv4 prefix length used for L3 point-to-point uplinks.
@@ -3551,7 +3551,7 @@ class EosDesigns(EosDesignsRootModel):
             """
             IPv6 prefix length used for L3 point-to-point uplinks.
 
-            Default value: `127`
+            Default value: `64`
             """
 
             if TYPE_CHECKING:
@@ -8280,6 +8280,7 @@ class EosDesigns(EosDesignsRootModel):
                 "p2p_uplinks_ip": {"type": str},
                 "p2p_uplinks_peer_ip": {"type": str},
                 "vtep_ip_mlag": {"type": str},
+                "vtep_ipv6_mlag": {"type": str},
                 "vtep_ip": {"type": str},
             }
             python_module: str | None
@@ -8312,6 +8313,8 @@ class EosDesigns(EosDesignsRootModel):
             """Path to Custom J2 template."""
             vtep_ip_mlag: str | None
             """Path to Custom J2 template."""
+            vtep_ipv6_mlag: str | None
+            """Path to Custom J2 template."""
             vtep_ip: str | None
             """Path to Custom J2 template."""
 
@@ -8333,6 +8336,7 @@ class EosDesigns(EosDesignsRootModel):
                     p2p_uplinks_ip: str | None | UndefinedType = Undefined,
                     p2p_uplinks_peer_ip: str | None | UndefinedType = Undefined,
                     vtep_ip_mlag: str | None | UndefinedType = Undefined,
+                    vtep_ipv6_mlag: str | None | UndefinedType = Undefined,
                     vtep_ip: str | None | UndefinedType = Undefined,
                 ) -> None:
                     """
@@ -8355,6 +8359,7 @@ class EosDesigns(EosDesignsRootModel):
                         p2p_uplinks_ip: Path to Custom J2 template.
                         p2p_uplinks_peer_ip: Path to Custom J2 template.
                         vtep_ip_mlag: Path to Custom J2 template.
+                        vtep_ipv6_mlag: Path to Custom J2 template.
                         vtep_ip: Path to Custom J2 template.
 
                     """
@@ -8804,6 +8809,7 @@ class EosDesigns(EosDesignsRootModel):
                 "p2p_uplinks_ip": {"type": str},
                 "p2p_uplinks_peer_ip": {"type": str},
                 "vtep_ip_mlag": {"type": str},
+                "vtep_ipv6_mlag": {"type": str},
                 "vtep_ip": {"type": str},
             }
             python_module: str | None
@@ -8836,6 +8842,8 @@ class EosDesigns(EosDesignsRootModel):
             """Path to Custom J2 template."""
             vtep_ip_mlag: str | None
             """Path to Custom J2 template."""
+            vtep_ipv6_mlag: str | None
+            """Path to Custom J2 template."""
             vtep_ip: str | None
             """Path to Custom J2 template."""
 
@@ -8857,6 +8865,7 @@ class EosDesigns(EosDesignsRootModel):
                     p2p_uplinks_ip: str | None | UndefinedType = Undefined,
                     p2p_uplinks_peer_ip: str | None | UndefinedType = Undefined,
                     vtep_ip_mlag: str | None | UndefinedType = Undefined,
+                    vtep_ipv6_mlag: str | None | UndefinedType = Undefined,
                     vtep_ip: str | None | UndefinedType = Undefined,
                 ) -> None:
                     """
@@ -8879,6 +8888,7 @@ class EosDesigns(EosDesignsRootModel):
                         p2p_uplinks_ip: Path to Custom J2 template.
                         p2p_uplinks_peer_ip: Path to Custom J2 template.
                         vtep_ip_mlag: Path to Custom J2 template.
+                        vtep_ipv6_mlag: Path to Custom J2 template.
                         vtep_ip: Path to Custom J2 template.
 
                     """
@@ -21158,7 +21168,10 @@ class EosDesigns(EosDesignsRootModel):
                     Default value: `0`
                     """
                     router_id_pool: str | None
-                    """IPv4 subnet for allocation router-id allocation."""
+                    """
+                    IPv4 subnet for allocation router-id allocation. Only used for IPv6 only underlays where there is no
+                    `loopback_ipv4_pool` set.
+                    """
                     loopback_ipv6_pool: str | None
                     """
                     Comma separated list of prefixes (IPv6 address/Mask) or ranges (IPv6_address-IPv6_address). The IPv6
@@ -22009,7 +22022,9 @@ class EosDesigns(EosDesignsRootModel):
                                    different node_types (like spine and l3leaf) to avoid overlapping IPs.
                                    For example, set the minimum
                                    offset l3leaf.defaults.loopback_ipv4_offset: < total # spine switches > or vice versa.
-                                router_id_pool: IPv4 subnet for allocation router-id allocation.
+                                router_id_pool:
+                                   IPv4 subnet for allocation router-id allocation. Only used for IPv6 only underlays where there is no
+                                   `loopback_ipv4_pool` set.
                                 loopback_ipv6_pool:
                                    Comma separated list of prefixes (IPv6 address/Mask) or ranges (IPv6_address-IPv6_address). The IPv6
                                    address used for Loopback0 will be derived from this pool based on the node id and
@@ -25341,7 +25356,10 @@ class EosDesigns(EosDesignsRootModel):
                         Default value: `0`
                         """
                         router_id_pool: str | None
-                        """IPv4 subnet for allocation router-id allocation."""
+                        """
+                        IPv4 subnet for allocation router-id allocation. Only used for IPv6 only underlays where there is no
+                        `loopback_ipv4_pool` set.
+                        """
                         loopback_ipv6_pool: str | None
                         """
                         Comma separated list of prefixes (IPv6 address/Mask) or ranges (IPv6_address-IPv6_address). The IPv6
@@ -26201,7 +26219,9 @@ class EosDesigns(EosDesignsRootModel):
                                        different node_types (like spine and l3leaf) to avoid overlapping IPs.
                                        For example, set the minimum
                                        offset l3leaf.defaults.loopback_ipv4_offset: < total # spine switches > or vice versa.
-                                    router_id_pool: IPv4 subnet for allocation router-id allocation.
+                                    router_id_pool:
+                                       IPv4 subnet for allocation router-id allocation. Only used for IPv6 only underlays where there is no
+                                       `loopback_ipv4_pool` set.
                                     loopback_ipv6_pool:
                                        Comma separated list of prefixes (IPv6 address/Mask) or ranges (IPv6_address-IPv6_address). The IPv6
                                        address used for Loopback0 will be derived from this pool based on the node id and
@@ -29444,7 +29464,10 @@ class EosDesigns(EosDesignsRootModel):
                     Default value: `0`
                     """
                     router_id_pool: str | None
-                    """IPv4 subnet for allocation router-id allocation."""
+                    """
+                    IPv4 subnet for allocation router-id allocation. Only used for IPv6 only underlays where there is no
+                    `loopback_ipv4_pool` set.
+                    """
                     loopback_ipv6_pool: str | None
                     """
                     Comma separated list of prefixes (IPv6 address/Mask) or ranges (IPv6_address-IPv6_address). The IPv6
@@ -30306,7 +30329,9 @@ class EosDesigns(EosDesignsRootModel):
                                    different node_types (like spine and l3leaf) to avoid overlapping IPs.
                                    For example, set the minimum
                                    offset l3leaf.defaults.loopback_ipv4_offset: < total # spine switches > or vice versa.
-                                router_id_pool: IPv4 subnet for allocation router-id allocation.
+                                router_id_pool:
+                                   IPv4 subnet for allocation router-id allocation. Only used for IPv6 only underlays where there is no
+                                   `loopback_ipv4_pool` set.
                                 loopback_ipv6_pool:
                                    Comma separated list of prefixes (IPv6 address/Mask) or ranges (IPv6_address-IPv6_address). The IPv6
                                    address used for Loopback0 will be derived from this pool based on the node id and
@@ -33621,7 +33646,10 @@ class EosDesigns(EosDesignsRootModel):
                     Default value: `0`
                     """
                     router_id_pool: str | None
-                    """IPv4 subnet for allocation router-id allocation."""
+                    """
+                    IPv4 subnet for allocation router-id allocation. Only used for IPv6 only underlays where there is no
+                    `loopback_ipv4_pool` set.
+                    """
                     loopback_ipv6_pool: str | None
                     """
                     Comma separated list of prefixes (IPv6 address/Mask) or ranges (IPv6_address-IPv6_address). The IPv6
@@ -34481,7 +34509,9 @@ class EosDesigns(EosDesignsRootModel):
                                    different node_types (like spine and l3leaf) to avoid overlapping IPs.
                                    For example, set the minimum
                                    offset l3leaf.defaults.loopback_ipv4_offset: < total # spine switches > or vice versa.
-                                router_id_pool: IPv4 subnet for allocation router-id allocation.
+                                router_id_pool:
+                                   IPv4 subnet for allocation router-id allocation. Only used for IPv6 only underlays where there is no
+                                   `loopback_ipv4_pool` set.
                                 loopback_ipv6_pool:
                                    Comma separated list of prefixes (IPv6 address/Mask) or ranges (IPv6_address-IPv6_address). The IPv6
                                    address used for Loopback0 will be derived from this pool based on the node id and
@@ -40117,6 +40147,7 @@ class EosDesigns(EosDesignsRootModel):
                         "rd_override": {"type": str},
                         "rt_override": {"type": str},
                         "mlag_ibgp_peering_ipv4_pool": {"type": str},
+                        "mlag_ibgp_peering_ipv6_pool": {"type": str},
                         "ip_helpers": {"type": IpHelpers},
                         "enable_mlag_ibgp_peering_vrfs": {"type": bool},
                         "redistribute_mlag_ibgp_peering_vrfs": {"type": bool},
@@ -40204,6 +40235,14 @@ class EosDesigns(EosDesignsRootModel):
                     subnet used for the iBGP peering in the VRF is derived from this pool based on the ID of the first
                     MLAG switch.
                     If not set, "mlag_peer_l3_ipv4_pool" or "mlag_peer_ipv4_pool" will be used.
+                    """
+                    mlag_ibgp_peering_ipv6_pool: str | None
+                    """
+                    Comma separated list of prefixes (IPv6 address/Mask) or ranges (IPv6_address-IPv4_address).
+                    The
+                    subnet used for the iBGP peering in the VRF is derived from this pool based on the ID of the first
+                    MLAG switch.
+                    If not set, "mlag_peer_l3_ipv6_pool" or "mlag_peer_ipv6_pool" will be used.
                     """
                     ip_helpers: IpHelpers
                     """
@@ -40401,6 +40440,7 @@ class EosDesigns(EosDesignsRootModel):
                             rd_override: str | None | UndefinedType = Undefined,
                             rt_override: str | None | UndefinedType = Undefined,
                             mlag_ibgp_peering_ipv4_pool: str | None | UndefinedType = Undefined,
+                            mlag_ibgp_peering_ipv6_pool: str | None | UndefinedType = Undefined,
                             ip_helpers: IpHelpers | UndefinedType = Undefined,
                             enable_mlag_ibgp_peering_vrfs: bool | None | UndefinedType = Undefined,
                             redistribute_mlag_ibgp_peering_vrfs: bool | None | UndefinedType = Undefined,
@@ -40480,6 +40520,12 @@ class EosDesigns(EosDesignsRootModel):
                                    subnet used for the iBGP peering in the VRF is derived from this pool based on the ID of the first
                                    MLAG switch.
                                    If not set, "mlag_peer_l3_ipv4_pool" or "mlag_peer_ipv4_pool" will be used.
+                                mlag_ibgp_peering_ipv6_pool:
+                                   Comma separated list of prefixes (IPv6 address/Mask) or ranges (IPv6_address-IPv4_address).
+                                   The
+                                   subnet used for the iBGP peering in the VRF is derived from this pool based on the ID of the first
+                                   MLAG switch.
+                                   If not set, "mlag_peer_l3_ipv6_pool" or "mlag_peer_ipv6_pool" will be used.
                                 ip_helpers:
                                    IP helper for DHCP relay.
 
@@ -44490,7 +44536,10 @@ class EosDesigns(EosDesignsRootModel):
                     Default value: `0`
                     """
                     router_id_pool: str | None
-                    """IPv4 subnet for allocation router-id allocation."""
+                    """
+                    IPv4 subnet for allocation router-id allocation. Only used for IPv6 only underlays where there is no
+                    `loopback_ipv4_pool` set.
+                    """
                     loopback_ipv6_pool: str | None
                     """
                     Comma separated list of prefixes (IPv6 address/Mask) or ranges (IPv6_address-IPv6_address). The IPv6
@@ -45341,7 +45390,9 @@ class EosDesigns(EosDesignsRootModel):
                                    different node_types (like spine and l3leaf) to avoid overlapping IPs.
                                    For example, set the minimum
                                    offset l3leaf.defaults.loopback_ipv4_offset: < total # spine switches > or vice versa.
-                                router_id_pool: IPv4 subnet for allocation router-id allocation.
+                                router_id_pool:
+                                   IPv4 subnet for allocation router-id allocation. Only used for IPv6 only underlays where there is no
+                                   `loopback_ipv4_pool` set.
                                 loopback_ipv6_pool:
                                    Comma separated list of prefixes (IPv6 address/Mask) or ranges (IPv6_address-IPv6_address). The IPv6
                                    address used for Loopback0 will be derived from this pool based on the node id and
@@ -48673,7 +48724,10 @@ class EosDesigns(EosDesignsRootModel):
                         Default value: `0`
                         """
                         router_id_pool: str | None
-                        """IPv4 subnet for allocation router-id allocation."""
+                        """
+                        IPv4 subnet for allocation router-id allocation. Only used for IPv6 only underlays where there is no
+                        `loopback_ipv4_pool` set.
+                        """
                         loopback_ipv6_pool: str | None
                         """
                         Comma separated list of prefixes (IPv6 address/Mask) or ranges (IPv6_address-IPv6_address). The IPv6
@@ -49533,7 +49587,9 @@ class EosDesigns(EosDesignsRootModel):
                                        different node_types (like spine and l3leaf) to avoid overlapping IPs.
                                        For example, set the minimum
                                        offset l3leaf.defaults.loopback_ipv4_offset: < total # spine switches > or vice versa.
-                                    router_id_pool: IPv4 subnet for allocation router-id allocation.
+                                    router_id_pool:
+                                       IPv4 subnet for allocation router-id allocation. Only used for IPv6 only underlays where there is no
+                                       `loopback_ipv4_pool` set.
                                     loopback_ipv6_pool:
                                        Comma separated list of prefixes (IPv6 address/Mask) or ranges (IPv6_address-IPv6_address). The IPv6
                                        address used for Loopback0 will be derived from this pool based on the node id and
@@ -52776,7 +52832,10 @@ class EosDesigns(EosDesignsRootModel):
                     Default value: `0`
                     """
                     router_id_pool: str | None
-                    """IPv4 subnet for allocation router-id allocation."""
+                    """
+                    IPv4 subnet for allocation router-id allocation. Only used for IPv6 only underlays where there is no
+                    `loopback_ipv4_pool` set.
+                    """
                     loopback_ipv6_pool: str | None
                     """
                     Comma separated list of prefixes (IPv6 address/Mask) or ranges (IPv6_address-IPv6_address). The IPv6
@@ -53638,7 +53697,9 @@ class EosDesigns(EosDesignsRootModel):
                                    different node_types (like spine and l3leaf) to avoid overlapping IPs.
                                    For example, set the minimum
                                    offset l3leaf.defaults.loopback_ipv4_offset: < total # spine switches > or vice versa.
-                                router_id_pool: IPv4 subnet for allocation router-id allocation.
+                                router_id_pool:
+                                   IPv4 subnet for allocation router-id allocation. Only used for IPv6 only underlays where there is no
+                                   `loopback_ipv4_pool` set.
                                 loopback_ipv6_pool:
                                    Comma separated list of prefixes (IPv6 address/Mask) or ranges (IPv6_address-IPv6_address). The IPv6
                                    address used for Loopback0 will be derived from this pool based on the node id and
@@ -56953,7 +57014,10 @@ class EosDesigns(EosDesignsRootModel):
                     Default value: `0`
                     """
                     router_id_pool: str | None
-                    """IPv4 subnet for allocation router-id allocation."""
+                    """
+                    IPv4 subnet for allocation router-id allocation. Only used for IPv6 only underlays where there is no
+                    `loopback_ipv4_pool` set.
+                    """
                     loopback_ipv6_pool: str | None
                     """
                     Comma separated list of prefixes (IPv6 address/Mask) or ranges (IPv6_address-IPv6_address). The IPv6
@@ -57813,7 +57877,9 @@ class EosDesigns(EosDesignsRootModel):
                                    different node_types (like spine and l3leaf) to avoid overlapping IPs.
                                    For example, set the minimum
                                    offset l3leaf.defaults.loopback_ipv4_offset: < total # spine switches > or vice versa.
-                                router_id_pool: IPv4 subnet for allocation router-id allocation.
+                                router_id_pool:
+                                   IPv4 subnet for allocation router-id allocation. Only used for IPv6 only underlays where there is no
+                                   `loopback_ipv4_pool` set.
                                 loopback_ipv6_pool:
                                    Comma separated list of prefixes (IPv6 address/Mask) or ranges (IPv6_address-IPv6_address). The IPv6
                                    address used for Loopback0 will be derived from this pool based on the node id and

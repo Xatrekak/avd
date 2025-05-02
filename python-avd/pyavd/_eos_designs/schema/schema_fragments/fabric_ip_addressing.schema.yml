@@ -58,7 +58,7 @@ keys:
             description: IPv4 prefix length used for L3 point-to-point uplinks.
           ipv6_prefix_length:
             type: int
-            default: 127
+            default: 64
             min: 1
             max: 127
             convert_types:

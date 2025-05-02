@@ -17,6 +17,7 @@
     | [<samp>mpls_lsr</samp>](## "mpls_lsr") | Boolean | Required |  |  |  |
     | [<samp>evpn_multicast</samp>](## "evpn_multicast") | Boolean |  |  |  |  |
     | [<samp>loopback_ipv4_pool</samp>](## "loopback_ipv4_pool") | String |  |  |  |  |
+    | [<samp>loopback_ipv6_pool</samp>](## "loopback_ipv6_pool") | String |  |  |  |  |
     | [<samp>uplink_ipv4_pool</samp>](## "uplink_ipv4_pool") | String |  |  |  |  |
     | [<samp>uplink_ipv6_pool</samp>](## "uplink_ipv6_pool") | String |  |  |  |  |
     | [<samp>downlink_pools</samp>](## "downlink_pools") | List, items: Dictionary |  |  |  | IPv4 pools used for links to downlink switches. Set this on the parent switch. Cannot be combined with `uplink_ipv4_pool` set on the downlink switch. |
@@ -36,6 +37,7 @@
     | [<samp>dc_name</samp>](## "dc_name") | String |  |  |  |  |
     | [<samp>group</samp>](## "group") | String |  |  |  |  |
     | [<samp>router_id</samp>](## "router_id") | String |  |  |  |  |
+    | [<samp>ipv6_router_id</samp>](## "ipv6_router_id") | String |  |  |  |  |
     | [<samp>inband_mgmt_ip</samp>](## "inband_mgmt_ip") | String |  |  |  | Used for fabric docs. |
     | [<samp>inband_mgmt_interface</samp>](## "inband_mgmt_interface") | String |  |  |  | Used for fabric docs. |
     | [<samp>pod</samp>](## "pod") | String | Required |  |  | Used for fabric docs. |
@@ -176,6 +178,7 @@
     mpls_lsr: <bool; required>
     evpn_multicast: <bool>
     loopback_ipv4_pool: <str>
+    loopback_ipv6_pool: <str>
     uplink_ipv4_pool: <str>
     uplink_ipv6_pool: <str>
 
@@ -205,6 +208,7 @@
     dc_name: <str>
     group: <str>
     router_id: <str>
+    ipv6_router_id: <str>
 
     # Used for fabric docs.
     inband_mgmt_ip: <str>
