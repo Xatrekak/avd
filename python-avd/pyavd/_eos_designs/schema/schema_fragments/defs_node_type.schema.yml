@@ -503,7 +503,7 @@ $defs:
           router_id_pool:
             documentation_options:
               table: node-type-loopback-vtep-configuration
-            description: IPv4 subnet for allocation router-id allocation. Only used for IPv6 only underlays where there is no `loopback_ipv4_pool` set.
+            description: IPv4 subnet for allocation router-id allocation.
             type: str
             format: ipv4_pool
           loopback_ipv6_pool:

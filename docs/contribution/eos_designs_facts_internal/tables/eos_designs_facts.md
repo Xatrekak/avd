@@ -37,7 +37,6 @@
     | [<samp>dc_name</samp>](## "dc_name") | String |  |  |  |  |
     | [<samp>group</samp>](## "group") | String |  |  |  |  |
     | [<samp>router_id</samp>](## "router_id") | String |  |  |  |  |
-    | [<samp>ipv6_router_id</samp>](## "ipv6_router_id") | String |  |  |  |  |
     | [<samp>inband_mgmt_ip</samp>](## "inband_mgmt_ip") | String |  |  |  | Used for fabric docs. |
     | [<samp>inband_mgmt_interface</samp>](## "inband_mgmt_interface") | String |  |  |  | Used for fabric docs. |
     | [<samp>pod</samp>](## "pod") | String | Required |  |  | Used for fabric docs. |
@@ -67,6 +66,7 @@
     | [<samp>&nbsp;&nbsp;peering_address</samp>](## "overlay.peering_address") | String |  |  |  |  |
     | [<samp>&nbsp;&nbsp;evpn_mpls</samp>](## "overlay.evpn_mpls") | Boolean | Required |  |  |  |
     | [<samp>vtep_ip</samp>](## "vtep_ip") | String |  |  |  |  |
+    | [<samp>vtep_ipv6</samp>](## "vtep_ipv6") | String |  |  |  |  |
     | [<samp>max_parallel_uplinks</samp>](## "max_parallel_uplinks") | Integer |  | `1` |  | Number of parallel links towards uplink switches.<br>Changing this value may change interface naming on uplinks (and corresponding downlinks).<br>Can be used to reserve interfaces for future parallel uplinks.<br> |
     | [<samp>max_uplink_switches</samp>](## "max_uplink_switches") | Integer | Required |  |  |  |
     | [<samp>uplinks</samp>](## "uplinks") | List, items: Dictionary | Required |  |  | List of uplinks with all parameters<br>These facts are leveraged by templates for this device when rendering uplinks<br>and by templates for peer devices when rendering downlinks |
@@ -208,7 +208,6 @@
     dc_name: <str>
     group: <str>
     router_id: <str>
-    ipv6_router_id: <str>
 
     # Used for fabric docs.
     inband_mgmt_ip: <str>
@@ -263,6 +262,7 @@
       peering_address: <str>
       evpn_mpls: <bool; required>
     vtep_ip: <str>
+    vtep_ipv6: <str>
 
     # Number of parallel links towards uplink switches.
     # Changing this value may change interface naming on uplinks (and corresponding downlinks).

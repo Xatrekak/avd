@@ -325,7 +325,6 @@ class AvdIpAddressingProtocol(UtilsMixin, AvdFactsProtocol, Protocol):
         if self._loopback_ipv4_address:
             return self._loopback_ipv4_address
 
-
         if self.shared_utils.underlay_ipv6_numbered:
             if template_path := self.shared_utils.node_type_key_data.ip_addressing.router_id:
                 return self._template(
@@ -369,9 +368,6 @@ class AvdIpAddressingProtocol(UtilsMixin, AvdFactsProtocol, Protocol):
         """
         if self._vtep_loopback_ipv4_address:
             return self._vtep_loopback_ipv4_address
-
-        if self.inputs.underlay_ipv6_numbered:
-            return None
 
         if template_path := self.shared_utils.node_type_key_data.ip_addressing.vtep_ip_mlag:
             return self._template(
@@ -421,9 +417,6 @@ class AvdIpAddressingProtocol(UtilsMixin, AvdFactsProtocol, Protocol):
         if self._vtep_loopback_ipv4_address:
             return self._vtep_loopback_ipv4_address
 
-        if self.inputs.underlay_ipv6_numbered:
-            return None
-
         if template_path := self.shared_utils.node_type_key_data.ip_addressing.vtep_ip:
             return self._template(
                 template_path,
@@ -434,6 +427,28 @@ class AvdIpAddressingProtocol(UtilsMixin, AvdFactsProtocol, Protocol):
 
         offset = self._id + self._loopback_ipv4_offset
         return get_ip_from_pool(self._vtep_loopback_ipv4_pool, 32, offset, 0)
+
+    def vtep_ipv6(self) -> str:
+        """
+        Return IP address for VTEP.
+
+        If "vtep_loopback_ipv4_address" is set, it is used.
+        Default pool is "vtep_loopback_ipv4_pool"
+        Default offset from pool is `id + loopback_ipv4_offset`
+        """
+        if self._vtep_loopback_ipv6_address:
+            return self._vtep_loopback_ipv6_address
+
+        if template_path := self.shared_utils.node_type_key_data.ip_addressing.vtep_ipv6:
+            return self._template(
+                template_path,
+                switch_id=self._id,
+                switch_vtep_loopback_ipv4_pool=self._vtep_loopback_ipv4_pool,
+                loopback_ipv6_offset=self._loopback_ipv6_offset,
+            )
+
+        offset = self._id + self._loopback_ipv6_offset
+        return get_ip_from_pool(self._vtep_loopback_ipv6_pool, self.shared_utils.loopback_ipv6_prefix_length, offset, 0)
 
     def vrf_loopback_ip(self, pool: str) -> str:
         """

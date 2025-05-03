@@ -84,7 +84,7 @@ class IpAddressingMixin(Protocol):
 
     @cached_property
     def vtep_ipv6(self: SharedUtilsProtocol) -> str:
-        """Render ipv4 address for vtep_ip using dynamically loaded python module."""
+        """Render ipv6 address for vtep_ip using dynamically loaded python module."""
         if self.mlag is True:
             return self.ip_addressing.vtep_ipv6_mlag()
 

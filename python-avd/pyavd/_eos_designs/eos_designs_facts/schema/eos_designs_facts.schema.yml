@@ -152,6 +152,8 @@ keys:
         required: true
   vtep_ip:
     type: str
+  vtep_ipv6:
+    type: str
   max_parallel_uplinks:
     type: int
     documentation_options:

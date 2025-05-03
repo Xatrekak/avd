@@ -942,7 +942,6 @@ class EosDesignsFactsProtocol(Protocol):
         "dc_name": {"type": str},
         "group": {"type": str},
         "router_id": {"type": str},
-        "ipv6_router_id": {"type": str},
         "inband_mgmt_ip": {"type": str},
         "inband_mgmt_interface": {"type": str},
         "pod": {"type": str},
@@ -960,6 +959,7 @@ class EosDesignsFactsProtocol(Protocol):
         "mpls_route_reflectors": {"type": MplsRouteReflectors},
         "overlay": {"type": Overlay},
         "vtep_ip": {"type": str},
+        "vtep_ipv6": {"type": str},
         "max_parallel_uplinks": {"type": int, "default": 1},
         "max_uplink_switches": {"type": int},
         "uplinks": {"type": Uplinks},
@@ -1008,7 +1008,6 @@ class EosDesignsFactsProtocol(Protocol):
     dc_name: str | None
     group: str | None
     router_id: str | None
-    ipv6_router_id: str | None
     inband_mgmt_ip: str | None
     """Used for fabric docs."""
     inband_mgmt_interface: str | None
@@ -1063,6 +1062,7 @@ class EosDesignsFactsProtocol(Protocol):
     overlay: Overlay
     """Subclass of AvdModel."""
     vtep_ip: str | None
+    vtep_ipv6: str | None
     max_parallel_uplinks: int
     """
     Number of parallel links towards uplink switches.
@@ -1165,7 +1165,6 @@ class EosDesignsFactsProtocol(Protocol):
             dc_name: str | None | UndefinedType = Undefined,
             group: str | None | UndefinedType = Undefined,
             router_id: str | None | UndefinedType = Undefined,
-            ipv6_router_id: str | None | UndefinedType = Undefined,
             inband_mgmt_ip: str | None | UndefinedType = Undefined,
             inband_mgmt_interface: str | None | UndefinedType = Undefined,
             pod: str | UndefinedType = Undefined,
@@ -1183,6 +1182,7 @@ class EosDesignsFactsProtocol(Protocol):
             mpls_route_reflectors: MplsRouteReflectors | UndefinedType = Undefined,
             overlay: Overlay | UndefinedType = Undefined,
             vtep_ip: str | None | UndefinedType = Undefined,
+            vtep_ipv6: str | None | UndefinedType = Undefined,
             max_parallel_uplinks: int | UndefinedType = Undefined,
             max_uplink_switches: int | UndefinedType = Undefined,
             uplinks: Uplinks | UndefinedType = Undefined,
@@ -1236,7 +1236,6 @@ class EosDesignsFactsProtocol(Protocol):
                 dc_name: dc_name
                 group: group
                 router_id: router_id
-                ipv6_router_id: ipv6_router_id
                 inband_mgmt_ip: Used for fabric docs.
                 inband_mgmt_interface: Used for fabric docs.
                 pod: Used for fabric docs.
@@ -1276,6 +1275,7 @@ class EosDesignsFactsProtocol(Protocol):
                    Subclass of AvdList with `str` items.
                 overlay: Subclass of AvdModel.
                 vtep_ip: vtep_ip
+                vtep_ipv6: vtep_ipv6
                 max_parallel_uplinks:
                    Number of parallel links towards uplink switches.
                    Changing this value may change interface naming on
