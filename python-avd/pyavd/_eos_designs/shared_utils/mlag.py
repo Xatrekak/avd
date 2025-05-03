@@ -137,12 +137,16 @@ class MlagMixin(Protocol):
 
     @cached_property
     def mlag_l3_ip(self: SharedUtilsProtocol) -> str | None:
-        """Render ipv4 address for mlag_l3_ip using dynamically loaded python module."""
+        """Render ipv4 or ipv6 address for mlag_l3_ip using dynamically loaded python module."""
         if self.mlag_peer_l3_vlan is None:
             return None
         if self.mlag_role == "primary":
+            if self.underlay_ipv6_numbered:
+                return self.ipv6_addressing.mlag_l3_ipv6_primary()
             return self.ip_addressing.mlag_l3_ip_primary()
         if self.mlag_role == "secondary":
+            if self.underlay_ipv6_numbered:
+                return self.ipv6_addressing.mlag_l3_ipv6_secondary()
             return self.ip_addressing.mlag_l3_ip_secondary()
         return None
 

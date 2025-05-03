@@ -138,17 +138,6 @@ class AvdIpAddressingProtocol(UtilsMixin, AvdFactsProtocol, Protocol):
 
         Default pool is "mlag_peer_l3_ipv4_pool"
         """
-        if self.shared_utils.underlay_ipv6_numbered:
-            if template_path := self.shared_utils.node_type_key_data.ipv6_addressing.mlag_l3_ip_primary:
-                return self._template(
-                    template_path,
-                    mlag_primary_id=self._mlag_primary_id,
-                    mlag_secondary_id=self._mlag_secondary_id,
-                    switch_data={"combined": {"mlag_peer_l3_ipv6_pool": self._mlag_peer_l3_ipv6_pool}},
-                )
-
-            return self._mlag_ip(self._mlag_peer_l3_ipv6_pool, 0, address_family="ipv6")
-
         if template_path := self.shared_utils.node_type_key_data.ip_addressing.mlag_l3_ip_primary:
             return self._template(
                 template_path,
@@ -159,23 +148,28 @@ class AvdIpAddressingProtocol(UtilsMixin, AvdFactsProtocol, Protocol):
 
         return self._mlag_ip(self._mlag_peer_l3_ipv4_pool, 0)
 
+    def mlag_l3_ipv6_primary(self) -> str:
+        """
+        Return IP for L3 Peerings for MLAG Primary.
+
+        Default pool is "mlag_peer_l3_ipv4_pool"
+        """
+        if template_path := self.shared_utils.node_type_key_data.ipv6_addressing.mlag_l3_ip_primary:
+            return self._template(
+                template_path,
+                mlag_primary_id=self._mlag_primary_id,
+                mlag_secondary_id=self._mlag_secondary_id,
+                switch_data={"combined": {"mlag_peer_l3_ipv6_pool": self._mlag_peer_l3_ipv6_pool}},
+            )
+
+        return self._mlag_ip(self._mlag_peer_l3_ipv6_pool, 0, address_family="ipv6")
+
     def mlag_l3_ip_secondary(self) -> str:
         """
         Return IP for L3 Peerings for MLAG Secondary.
 
         Default pool is "mlag_peer_l3_ipv4_pool"
         """
-        if self.shared_utils.underlay_ipv6_numbered:
-            if template_path := self.shared_utils.node_type_key_data.ipv6_addressing.mlag_l3_ip_secondary:
-                return self._template(
-                    template_path,
-                    mlag_primary_id=self._mlag_primary_id,
-                    mlag_secondary_id=self._mlag_secondary_id,
-                    switch_data={"combined": {"mlag_peer_l3_ipv6_pool": self._mlag_peer_l3_ipv6_pool}},
-                )
-
-            return self._mlag_ip(self._mlag_peer_l3_ipv6_pool, 1, address_family="ipv6")
-
         if template_path := self.shared_utils.node_type_key_data.ip_addressing.mlag_l3_ip_secondary:
             return self._template(
                 template_path,
@@ -185,6 +179,22 @@ class AvdIpAddressingProtocol(UtilsMixin, AvdFactsProtocol, Protocol):
             )
 
         return self._mlag_ip(self._mlag_peer_l3_ipv4_pool, 1)
+
+    def mlag_l3_ipv6_secondary(self) -> str:
+        """
+        Return IP for L3 Peerings for MLAG Secondary.
+
+        Default pool is "mlag_peer_l3_ipv4_pool"
+        """
+        if template_path := self.shared_utils.node_type_key_data.ipv6_addressing.mlag_l3_ip_secondary:
+            return self._template(
+                template_path,
+                mlag_primary_id=self._mlag_primary_id,
+                mlag_secondary_id=self._mlag_secondary_id,
+                switch_data={"combined": {"mlag_peer_l3_ipv6_pool": self._mlag_peer_l3_ipv6_pool}},
+            )
+
+        return self._mlag_ip(self._mlag_peer_l3_ipv6_pool, 1, address_family="ipv6")
 
     def p2p_uplinks_ip(self, uplink_switch_index: int) -> str:
         """Return Child IP for P2P Uplinks."""
