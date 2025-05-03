@@ -3459,6 +3459,31 @@ class EosDesigns(EosDesignsRootModel):
     class FabricIpAddressing(AvdModel):
         """Subclass of AvdModel."""
 
+        class Loopback(AvdModel):
+            """Subclass of AvdModel."""
+
+            _fields: ClassVar[dict] = {"ipv6_prefix_length": {"type": int, "default": 128}}
+            ipv6_prefix_length: Literal[64, 128]
+            """
+            IPv6 prefix length used for loopbacks
+
+            Default value: `128`
+            """
+
+            if TYPE_CHECKING:
+
+                def __init__(self, *, ipv6_prefix_length: Literal[64, 128] | UndefinedType = Undefined) -> None:
+                    """
+                    Loopback.
+
+
+                    Subclass of AvdModel.
+
+                    Args:
+                        ipv6_prefix_length: IPv6 prefix length used for loopbacks
+
+                    """
+
         class Mlag(AvdModel):
             """Subclass of AvdModel."""
 
@@ -3594,7 +3619,9 @@ class EosDesigns(EosDesignsRootModel):
 
                     """
 
-        _fields: ClassVar[dict] = {"mlag": {"type": Mlag}, "p2p_uplinks": {"type": P2pUplinks}, "wan_ha": {"type": WanHa}}
+        _fields: ClassVar[dict] = {"loopback": {"type": Loopback}, "mlag": {"type": Mlag}, "p2p_uplinks": {"type": P2pUplinks}, "wan_ha": {"type": WanHa}}
+        loopback: Loopback
+        """Subclass of AvdModel."""
         mlag: Mlag
         """Subclass of AvdModel."""
         p2p_uplinks: P2pUplinks
@@ -3609,7 +3636,12 @@ class EosDesigns(EosDesignsRootModel):
         if TYPE_CHECKING:
 
             def __init__(
-                self, *, mlag: Mlag | UndefinedType = Undefined, p2p_uplinks: P2pUplinks | UndefinedType = Undefined, wan_ha: WanHa | UndefinedType = Undefined
+                self,
+                *,
+                loopback: Loopback | UndefinedType = Undefined,
+                mlag: Mlag | UndefinedType = Undefined,
+                p2p_uplinks: P2pUplinks | UndefinedType = Undefined,
+                wan_ha: WanHa | UndefinedType = Undefined,
             ) -> None:
                 """
                 FabricIpAddressing.
@@ -3618,6 +3650,7 @@ class EosDesigns(EosDesignsRootModel):
                 Subclass of AvdModel.
 
                 Args:
+                    loopback: Subclass of AvdModel.
                     mlag: Subclass of AvdModel.
                     p2p_uplinks: Subclass of AvdModel.
                     wan_ha:
@@ -20965,7 +20998,6 @@ class EosDesigns(EosDesignsRootModel):
                         "loopback_ipv4_offset": {"type": int, "default": 0},
                         "router_id_pool": {"type": str},
                         "loopback_ipv6_pool": {"type": str},
-                        "loopback_ipv6_prefix_length": {"type": int, "default": 128},
                         "loopback_ipv6_offset": {"type": int, "default": 0},
                         "vtep": {"type": bool},
                         "vtep_loopback": {"type": str},
@@ -21360,12 +21392,6 @@ class EosDesigns(EosDesignsRootModel):
                     Comma separated list of prefixes (IPv6 address/Mask) or ranges (IPv6_address-IPv6_address). The IPv6
                     address used for Loopback0 will be derived from this pool based on the node id and
                     'loopback_ipv6_offset'.
-                    """
-                    loopback_ipv6_prefix_length: Literal[64, 128]
-                    """
-                    IPv6 prefix length used for loopbacks
-
-                    Default value: `128`
                     """
                     loopback_ipv6_offset: int
                     """
@@ -21906,7 +21932,6 @@ class EosDesigns(EosDesignsRootModel):
                             loopback_ipv4_offset: int | UndefinedType = Undefined,
                             router_id_pool: str | None | UndefinedType = Undefined,
                             loopback_ipv6_pool: str | None | UndefinedType = Undefined,
-                            loopback_ipv6_prefix_length: Literal[64, 128] | UndefinedType = Undefined,
                             loopback_ipv6_offset: int | UndefinedType = Undefined,
                             vtep: bool | None | UndefinedType = Undefined,
                             vtep_loopback: str | None | UndefinedType = Undefined,
@@ -22210,7 +22235,6 @@ class EosDesigns(EosDesignsRootModel):
                                    Comma separated list of prefixes (IPv6 address/Mask) or ranges (IPv6_address-IPv6_address). The IPv6
                                    address used for Loopback0 will be derived from this pool based on the node id and
                                    'loopback_ipv6_offset'.
-                                loopback_ipv6_prefix_length: IPv6 prefix length used for loopbacks
                                 loopback_ipv6_offset:
                                    Offset all assigned loopback IPv6 addresses.
                                    Required when the 'loopback_ipv6_pool' is same for 2
@@ -25138,7 +25162,6 @@ class EosDesigns(EosDesignsRootModel):
                             "loopback_ipv4_offset": {"type": int, "default": 0},
                             "router_id_pool": {"type": str},
                             "loopback_ipv6_pool": {"type": str},
-                            "loopback_ipv6_prefix_length": {"type": int, "default": 128},
                             "loopback_ipv6_offset": {"type": int, "default": 0},
                             "vtep": {"type": bool},
                             "vtep_loopback": {"type": str},
@@ -25543,12 +25566,6 @@ class EosDesigns(EosDesignsRootModel):
                         Comma separated list of prefixes (IPv6 address/Mask) or ranges (IPv6_address-IPv6_address). The IPv6
                         address used for Loopback0 will be derived from this pool based on the node id and
                         'loopback_ipv6_offset'.
-                        """
-                        loopback_ipv6_prefix_length: Literal[64, 128]
-                        """
-                        IPv6 prefix length used for loopbacks
-
-                        Default value: `128`
                         """
                         loopback_ipv6_offset: int
                         """
@@ -26091,7 +26108,6 @@ class EosDesigns(EosDesignsRootModel):
                                 loopback_ipv4_offset: int | UndefinedType = Undefined,
                                 router_id_pool: str | None | UndefinedType = Undefined,
                                 loopback_ipv6_pool: str | None | UndefinedType = Undefined,
-                                loopback_ipv6_prefix_length: Literal[64, 128] | UndefinedType = Undefined,
                                 loopback_ipv6_offset: int | UndefinedType = Undefined,
                                 vtep: bool | None | UndefinedType = Undefined,
                                 vtep_loopback: str | None | UndefinedType = Undefined,
@@ -26402,7 +26418,6 @@ class EosDesigns(EosDesignsRootModel):
                                        Comma separated list of prefixes (IPv6 address/Mask) or ranges (IPv6_address-IPv6_address). The IPv6
                                        address used for Loopback0 will be derived from this pool based on the node id and
                                        'loopback_ipv6_offset'.
-                                    loopback_ipv6_prefix_length: IPv6 prefix length used for loopbacks
                                     loopback_ipv6_offset:
                                        Offset all assigned loopback IPv6 addresses.
                                        Required when the 'loopback_ipv6_pool' is same for 2
@@ -29238,7 +29253,6 @@ class EosDesigns(EosDesignsRootModel):
                         "loopback_ipv4_offset": {"type": int, "default": 0},
                         "router_id_pool": {"type": str},
                         "loopback_ipv6_pool": {"type": str},
-                        "loopback_ipv6_prefix_length": {"type": int, "default": 128},
                         "loopback_ipv6_offset": {"type": int, "default": 0},
                         "vtep": {"type": bool},
                         "vtep_loopback": {"type": str},
@@ -29646,12 +29660,6 @@ class EosDesigns(EosDesignsRootModel):
                     Comma separated list of prefixes (IPv6 address/Mask) or ranges (IPv6_address-IPv6_address). The IPv6
                     address used for Loopback0 will be derived from this pool based on the node id and
                     'loopback_ipv6_offset'.
-                    """
-                    loopback_ipv6_prefix_length: Literal[64, 128]
-                    """
-                    IPv6 prefix length used for loopbacks
-
-                    Default value: `128`
                     """
                     loopback_ipv6_offset: int
                     """
@@ -30194,7 +30202,6 @@ class EosDesigns(EosDesignsRootModel):
                             loopback_ipv4_offset: int | UndefinedType = Undefined,
                             router_id_pool: str | None | UndefinedType = Undefined,
                             loopback_ipv6_pool: str | None | UndefinedType = Undefined,
-                            loopback_ipv6_prefix_length: Literal[64, 128] | UndefinedType = Undefined,
                             loopback_ipv6_offset: int | UndefinedType = Undefined,
                             vtep: bool | None | UndefinedType = Undefined,
                             vtep_loopback: str | None | UndefinedType = Undefined,
@@ -30507,7 +30514,6 @@ class EosDesigns(EosDesignsRootModel):
                                    Comma separated list of prefixes (IPv6 address/Mask) or ranges (IPv6_address-IPv6_address). The IPv6
                                    address used for Loopback0 will be derived from this pool based on the node id and
                                    'loopback_ipv6_offset'.
-                                loopback_ipv6_prefix_length: IPv6 prefix length used for loopbacks
                                 loopback_ipv6_offset:
                                    Offset all assigned loopback IPv6 addresses.
                                    Required when the 'loopback_ipv6_pool' is same for 2
@@ -33418,7 +33424,6 @@ class EosDesigns(EosDesignsRootModel):
                         "loopback_ipv4_offset": {"type": int, "default": 0},
                         "router_id_pool": {"type": str},
                         "loopback_ipv6_pool": {"type": str},
-                        "loopback_ipv6_prefix_length": {"type": int, "default": 128},
                         "loopback_ipv6_offset": {"type": int, "default": 0},
                         "vtep": {"type": bool},
                         "vtep_loopback": {"type": str},
@@ -33823,12 +33828,6 @@ class EosDesigns(EosDesignsRootModel):
                     Comma separated list of prefixes (IPv6 address/Mask) or ranges (IPv6_address-IPv6_address). The IPv6
                     address used for Loopback0 will be derived from this pool based on the node id and
                     'loopback_ipv6_offset'.
-                    """
-                    loopback_ipv6_prefix_length: Literal[64, 128]
-                    """
-                    IPv6 prefix length used for loopbacks
-
-                    Default value: `128`
                     """
                     loopback_ipv6_offset: int
                     """
@@ -34371,7 +34370,6 @@ class EosDesigns(EosDesignsRootModel):
                             loopback_ipv4_offset: int | UndefinedType = Undefined,
                             router_id_pool: str | None | UndefinedType = Undefined,
                             loopback_ipv6_pool: str | None | UndefinedType = Undefined,
-                            loopback_ipv6_prefix_length: Literal[64, 128] | UndefinedType = Undefined,
                             loopback_ipv6_offset: int | UndefinedType = Undefined,
                             vtep: bool | None | UndefinedType = Undefined,
                             vtep_loopback: str | None | UndefinedType = Undefined,
@@ -34682,7 +34680,6 @@ class EosDesigns(EosDesignsRootModel):
                                    Comma separated list of prefixes (IPv6 address/Mask) or ranges (IPv6_address-IPv6_address). The IPv6
                                    address used for Loopback0 will be derived from this pool based on the node id and
                                    'loopback_ipv6_offset'.
-                                loopback_ipv6_prefix_length: IPv6 prefix length used for loopbacks
                                 loopback_ipv6_offset:
                                    Offset all assigned loopback IPv6 addresses.
                                    Required when the 'loopback_ipv6_pool' is same for 2
@@ -44313,7 +44310,6 @@ class EosDesigns(EosDesignsRootModel):
                         "loopback_ipv4_offset": {"type": int, "default": 0},
                         "router_id_pool": {"type": str},
                         "loopback_ipv6_pool": {"type": str},
-                        "loopback_ipv6_prefix_length": {"type": int, "default": 128},
                         "loopback_ipv6_offset": {"type": int, "default": 0},
                         "vtep": {"type": bool},
                         "vtep_loopback": {"type": str},
@@ -44708,12 +44704,6 @@ class EosDesigns(EosDesignsRootModel):
                     Comma separated list of prefixes (IPv6 address/Mask) or ranges (IPv6_address-IPv6_address). The IPv6
                     address used for Loopback0 will be derived from this pool based on the node id and
                     'loopback_ipv6_offset'.
-                    """
-                    loopback_ipv6_prefix_length: Literal[64, 128]
-                    """
-                    IPv6 prefix length used for loopbacks
-
-                    Default value: `128`
                     """
                     loopback_ipv6_offset: int
                     """
@@ -45254,7 +45244,6 @@ class EosDesigns(EosDesignsRootModel):
                             loopback_ipv4_offset: int | UndefinedType = Undefined,
                             router_id_pool: str | None | UndefinedType = Undefined,
                             loopback_ipv6_pool: str | None | UndefinedType = Undefined,
-                            loopback_ipv6_prefix_length: Literal[64, 128] | UndefinedType = Undefined,
                             loopback_ipv6_offset: int | UndefinedType = Undefined,
                             vtep: bool | None | UndefinedType = Undefined,
                             vtep_loopback: str | None | UndefinedType = Undefined,
@@ -45558,7 +45547,6 @@ class EosDesigns(EosDesignsRootModel):
                                    Comma separated list of prefixes (IPv6 address/Mask) or ranges (IPv6_address-IPv6_address). The IPv6
                                    address used for Loopback0 will be derived from this pool based on the node id and
                                    'loopback_ipv6_offset'.
-                                loopback_ipv6_prefix_length: IPv6 prefix length used for loopbacks
                                 loopback_ipv6_offset:
                                    Offset all assigned loopback IPv6 addresses.
                                    Required when the 'loopback_ipv6_pool' is same for 2
@@ -48486,7 +48474,6 @@ class EosDesigns(EosDesignsRootModel):
                             "loopback_ipv4_offset": {"type": int, "default": 0},
                             "router_id_pool": {"type": str},
                             "loopback_ipv6_pool": {"type": str},
-                            "loopback_ipv6_prefix_length": {"type": int, "default": 128},
                             "loopback_ipv6_offset": {"type": int, "default": 0},
                             "vtep": {"type": bool},
                             "vtep_loopback": {"type": str},
@@ -48891,12 +48878,6 @@ class EosDesigns(EosDesignsRootModel):
                         Comma separated list of prefixes (IPv6 address/Mask) or ranges (IPv6_address-IPv6_address). The IPv6
                         address used for Loopback0 will be derived from this pool based on the node id and
                         'loopback_ipv6_offset'.
-                        """
-                        loopback_ipv6_prefix_length: Literal[64, 128]
-                        """
-                        IPv6 prefix length used for loopbacks
-
-                        Default value: `128`
                         """
                         loopback_ipv6_offset: int
                         """
@@ -49439,7 +49420,6 @@ class EosDesigns(EosDesignsRootModel):
                                 loopback_ipv4_offset: int | UndefinedType = Undefined,
                                 router_id_pool: str | None | UndefinedType = Undefined,
                                 loopback_ipv6_pool: str | None | UndefinedType = Undefined,
-                                loopback_ipv6_prefix_length: Literal[64, 128] | UndefinedType = Undefined,
                                 loopback_ipv6_offset: int | UndefinedType = Undefined,
                                 vtep: bool | None | UndefinedType = Undefined,
                                 vtep_loopback: str | None | UndefinedType = Undefined,
@@ -49750,7 +49730,6 @@ class EosDesigns(EosDesignsRootModel):
                                        Comma separated list of prefixes (IPv6 address/Mask) or ranges (IPv6_address-IPv6_address). The IPv6
                                        address used for Loopback0 will be derived from this pool based on the node id and
                                        'loopback_ipv6_offset'.
-                                    loopback_ipv6_prefix_length: IPv6 prefix length used for loopbacks
                                     loopback_ipv6_offset:
                                        Offset all assigned loopback IPv6 addresses.
                                        Required when the 'loopback_ipv6_pool' is same for 2
@@ -52586,7 +52565,6 @@ class EosDesigns(EosDesignsRootModel):
                         "loopback_ipv4_offset": {"type": int, "default": 0},
                         "router_id_pool": {"type": str},
                         "loopback_ipv6_pool": {"type": str},
-                        "loopback_ipv6_prefix_length": {"type": int, "default": 128},
                         "loopback_ipv6_offset": {"type": int, "default": 0},
                         "vtep": {"type": bool},
                         "vtep_loopback": {"type": str},
@@ -52994,12 +52972,6 @@ class EosDesigns(EosDesignsRootModel):
                     Comma separated list of prefixes (IPv6 address/Mask) or ranges (IPv6_address-IPv6_address). The IPv6
                     address used for Loopback0 will be derived from this pool based on the node id and
                     'loopback_ipv6_offset'.
-                    """
-                    loopback_ipv6_prefix_length: Literal[64, 128]
-                    """
-                    IPv6 prefix length used for loopbacks
-
-                    Default value: `128`
                     """
                     loopback_ipv6_offset: int
                     """
@@ -53542,7 +53514,6 @@ class EosDesigns(EosDesignsRootModel):
                             loopback_ipv4_offset: int | UndefinedType = Undefined,
                             router_id_pool: str | None | UndefinedType = Undefined,
                             loopback_ipv6_pool: str | None | UndefinedType = Undefined,
-                            loopback_ipv6_prefix_length: Literal[64, 128] | UndefinedType = Undefined,
                             loopback_ipv6_offset: int | UndefinedType = Undefined,
                             vtep: bool | None | UndefinedType = Undefined,
                             vtep_loopback: str | None | UndefinedType = Undefined,
@@ -53855,7 +53826,6 @@ class EosDesigns(EosDesignsRootModel):
                                    Comma separated list of prefixes (IPv6 address/Mask) or ranges (IPv6_address-IPv6_address). The IPv6
                                    address used for Loopback0 will be derived from this pool based on the node id and
                                    'loopback_ipv6_offset'.
-                                loopback_ipv6_prefix_length: IPv6 prefix length used for loopbacks
                                 loopback_ipv6_offset:
                                    Offset all assigned loopback IPv6 addresses.
                                    Required when the 'loopback_ipv6_pool' is same for 2
@@ -56766,7 +56736,6 @@ class EosDesigns(EosDesignsRootModel):
                         "loopback_ipv4_offset": {"type": int, "default": 0},
                         "router_id_pool": {"type": str},
                         "loopback_ipv6_pool": {"type": str},
-                        "loopback_ipv6_prefix_length": {"type": int, "default": 128},
                         "loopback_ipv6_offset": {"type": int, "default": 0},
                         "vtep": {"type": bool},
                         "vtep_loopback": {"type": str},
@@ -57171,12 +57140,6 @@ class EosDesigns(EosDesignsRootModel):
                     Comma separated list of prefixes (IPv6 address/Mask) or ranges (IPv6_address-IPv6_address). The IPv6
                     address used for Loopback0 will be derived from this pool based on the node id and
                     'loopback_ipv6_offset'.
-                    """
-                    loopback_ipv6_prefix_length: Literal[64, 128]
-                    """
-                    IPv6 prefix length used for loopbacks
-
-                    Default value: `128`
                     """
                     loopback_ipv6_offset: int
                     """
@@ -57719,7 +57682,6 @@ class EosDesigns(EosDesignsRootModel):
                             loopback_ipv4_offset: int | UndefinedType = Undefined,
                             router_id_pool: str | None | UndefinedType = Undefined,
                             loopback_ipv6_pool: str | None | UndefinedType = Undefined,
-                            loopback_ipv6_prefix_length: Literal[64, 128] | UndefinedType = Undefined,
                             loopback_ipv6_offset: int | UndefinedType = Undefined,
                             vtep: bool | None | UndefinedType = Undefined,
                             vtep_loopback: str | None | UndefinedType = Undefined,
@@ -58030,7 +57992,6 @@ class EosDesigns(EosDesignsRootModel):
                                    Comma separated list of prefixes (IPv6 address/Mask) or ranges (IPv6_address-IPv6_address). The IPv6
                                    address used for Loopback0 will be derived from this pool based on the node id and
                                    'loopback_ipv6_offset'.
-                                loopback_ipv6_prefix_length: IPv6 prefix length used for loopbacks
                                 loopback_ipv6_offset:
                                    Offset all assigned loopback IPv6 addresses.
                                    Required when the 'loopback_ipv6_pool' is same for 2

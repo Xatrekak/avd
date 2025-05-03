@@ -366,7 +366,7 @@ class AvdIpAddressingProtocol(UtilsMixin, AvdFactsProtocol, Protocol):
         Default offset from pool is `id + loopback_ipv6_offset`
         """
         offset = self._id + self._loopback_ipv6_offset
-        return get_ip_from_pool(self._loopback_ipv6_pool, self.shared_utils.loopback_ipv6_prefix_length, offset, 0)
+        return get_ip_from_pool(self._loopback_ipv6_pool, self.inputs.fabric_ip_addressing.loopback.ipv6_prefix_length, offset, 0)
 
     def vtep_ip_mlag(self) -> str:
         """
@@ -458,7 +458,7 @@ class AvdIpAddressingProtocol(UtilsMixin, AvdFactsProtocol, Protocol):
             )
 
         offset = self._id + self._loopback_ipv6_offset
-        return get_ip_from_pool(self._vtep_loopback_ipv6_pool, self.shared_utils.loopback_ipv6_prefix_length, offset, 0)
+        return get_ip_from_pool(self._vtep_loopback_ipv6_pool, self.inputs.fabric_ip_addressing.loopback.ipv6_prefix_length, offset, 0)
 
     def vrf_loopback_ip(self, pool: str) -> str:
         """

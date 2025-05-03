@@ -514,15 +514,6 @@ $defs:
               The IPv6 address used for Loopback0 will be derived from this pool based on the node id and 'loopback_ipv6_offset'.
             type: str
             format: ipv6_pool
-          loopback_ipv6_prefix_length:
-            documentation_options:
-              table: node-type-loopback-vtep-configuration
-            description: IPv6 prefix length used for loopbacks
-            type: int
-            valid_values:
-              - 64
-              - 128
-            default: 128
           loopback_ipv6_offset:
             documentation_options:
               table: node-type-loopback-vtep-configuration

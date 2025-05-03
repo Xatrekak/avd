@@ -120,10 +120,6 @@ class UtilsMixin(Protocol):
         return self.shared_utils.router_id_pool
 
     @cached_property
-    def _loopback_ipv6_prefix_length(self: AvdIpAddressingProtocol) -> str:
-        return self.shared_utils.loopback_ipv6_prefix_length
-
-    @cached_property
     def _mlag_odd_id_based_offset(self: AvdIpAddressingProtocol) -> int:
         """
         Return the subnet offset for an MLAG pair based on odd id.

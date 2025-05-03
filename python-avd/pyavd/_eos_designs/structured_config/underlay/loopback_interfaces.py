@@ -45,7 +45,7 @@ class LoopbackInterfacesMixin(Protocol):
 
         if self.inputs.underlay_ipv6_numbered:
             del loopback0.ip_address
-            loopback0.ipv6_address = f"{self.shared_utils.ipv6_router_id}/{self.shared_utils.loopback_ipv6_prefix_length}"
+            loopback0.ipv6_address = f"{self.shared_utils.ipv6_router_id}/{self.inputs.fabric_ip_addressing.loopback.ipv6_prefix_length}"
         elif self.shared_utils.ipv6_router_id is not None:
             loopback0.ipv6_address = f"{self.shared_utils.ipv6_router_id}/128"
 
@@ -82,7 +82,7 @@ class LoopbackInterfacesMixin(Protocol):
             )
 
             if self.inputs.underlay_ipv6_numbered:
-                vtep_loopback.ipv6_address = f"{self.shared_utils.vtep_ipv6}/{self.shared_utils.loopback_ipv6_prefix_length}"
+                vtep_loopback.ipv6_address = f"{self.shared_utils.vtep_ipv6}/{self.inputs.fabric_ip_addressing.loopback.ipv6_prefix_length}"
             else:
                 vtep_loopback.ip_address = f"{self.shared_utils.vtep_ip}/32"
 

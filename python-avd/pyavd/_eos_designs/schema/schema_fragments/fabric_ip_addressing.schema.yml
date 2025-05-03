@@ -9,6 +9,18 @@ keys:
   fabric_ip_addressing:
     type: dict
     keys:
+      loopback:
+        type: dict
+        keys:
+          ipv6_prefix_length:
+            documentation_options:
+              table: node-type-loopback-vtep-configuration
+            description: IPv6 prefix length used for loopbacks
+            type: int
+            valid_values:
+              - 64
+              - 128
+            default: 128
       mlag:
         type: dict
         keys:

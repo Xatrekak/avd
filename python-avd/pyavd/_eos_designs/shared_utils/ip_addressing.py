@@ -31,13 +31,6 @@ class IpAddressingMixin(Protocol):
         return self.node_config.loopback_ipv6_pool
 
     @cached_property
-    def loopback_ipv6_prefix_length(self: SharedUtilsProtocol) -> str:
-        if not self.node_config.loopback_ipv6_prefix_length:
-            self.node_config.loopback_ipv6_prefix_length = 128
-
-        return self.node_config.loopback_ipv6_prefix_length
-
-    @cached_property
     def loopback_ipv4_pool(self: SharedUtilsProtocol) -> str | None:
         if self.inputs.underlay_ipv6_numbered:
             return None
