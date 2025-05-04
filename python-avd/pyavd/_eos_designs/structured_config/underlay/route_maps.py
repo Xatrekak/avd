@@ -36,18 +36,16 @@ class RouteMapsMixin(Protocol):
             # RM-CONN-2-BGP
             sequence_numbers = EosCliConfigGen.RouteMapsItem.SequenceNumbers()
             if not self.shared_utils.underlay_ipv6_numbered:
-                sequence_numbers.append_new(
+                sequence_10 = EosCliConfigGen.RouteMapsItem.SequenceNumbersItem(
                     sequence=10,
                     type="permit",
                     match=EosCliConfigGen.RouteMapsItem.SequenceNumbersItem.Match(["ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY"]),
                 )
+                if self.shared_utils.wan_role:
+                    sequence_10.set = EosCliConfigGen.RouteMapsItem.SequenceNumbersItem.Set([f"extcommunity soo {self.shared_utils.evpn_soo} additive"])
 
-            if self.shared_utils.wan_role:
-                sequence_numbers.append_new(
-                    sequence=10,
-                    type="permit",
-                    set=EosCliConfigGen.RouteMapsItem.SequenceNumbersItem.Set([f"extcommunity soo {self.shared_utils.evpn_soo} additive"]),
-                )
+                sequence_numbers.append(sequence_10)
+                # SEQ 20 is set by inband management if applicable, so avoid setting that here
 
             if self.shared_utils.underlay_ipv6 is True:
                 sequence_numbers.append_new(

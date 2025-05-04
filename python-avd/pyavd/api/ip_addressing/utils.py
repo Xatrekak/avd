@@ -92,7 +92,7 @@ class UtilsMixin(Protocol):
         return self.shared_utils.node_config.loopback_ipv4_offset
 
     @cached_property
-    def _loopback_ipv6_pool(self: AvdIpAddressingProtocol) -> str:
+    def _loopback_ipv6_pool(self: AvdIpAddressingProtocol) -> str | None:
         return self.shared_utils.loopback_ipv6_pool
 
     @cached_property

@@ -17,10 +17,12 @@ keys:
               table: node-type-loopback-vtep-configuration
             description: IPv6 prefix length used for loopbacks
             type: int
+            default: 128
             valid_values:
               - 64
               - 128
-            default: 128
+            convert_types:
+              - str
       mlag:
         type: dict
         keys:
