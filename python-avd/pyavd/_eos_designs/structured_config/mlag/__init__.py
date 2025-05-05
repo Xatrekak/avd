@@ -273,7 +273,10 @@ class AvdStructuredConfigMlag(StructuredConfigGenerator):
             return
 
         # MLAG Peer group
-        peer_group_name = self.inputs.bgp_peer_groups.mlag_ipv4_underlay_peer.name
+        if self.shared_utils.underlay_ipv6_numbered:
+            peer_group_name = self.inputs.bgp_peer_groups.mlag_ipv6_underlay_peer.name
+        else:
+            peer_group_name = self.inputs.bgp_peer_groups.mlag_ipv4_underlay_peer.name
         self.shared_utils.update_router_bgp_with_mlag_peer_group(self.structured_config.router_bgp, self.custom_structured_configs)
 
         vlan = default(self.shared_utils.mlag_peer_l3_vlan, self.shared_utils.node_config.mlag_peer_vlan)

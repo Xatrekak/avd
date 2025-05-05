@@ -122,8 +122,8 @@ router_bgp:
     default:
       ipv4_unicast: false
   peer_groups:
-  - name: IPv4-UNDERLAY-PEERS
-    type: ipv4
+  - name: IPv6-UNDERLAY-PEERS
+    type: ipv6
     password: 7x4B4rnJhZB438m9+BrBfQ==
     send_community: all
     maximum_routes: 12000
@@ -138,22 +138,22 @@ router_bgp:
     maximum_routes: 0
   neighbors:
   - ip_address: 2001:db8:2:1::2
-    peer_group: IPv4-UNDERLAY-PEERS
+    peer_group: IPv6-UNDERLAY-PEERS
     remote_as: '65101'
     peer: leaf1
     description: leaf1_Ethernet2
   - ip_address: 2001:db8:2:3::2
-    peer_group: IPv4-UNDERLAY-PEERS
+    peer_group: IPv6-UNDERLAY-PEERS
     remote_as: '65101'
     peer: leaf2
     description: leaf2_Ethernet2
   - ip_address: 2001:db8:2:5::2
-    peer_group: IPv4-UNDERLAY-PEERS
+    peer_group: IPv6-UNDERLAY-PEERS
     remote_as: '65102'
     peer: leaf3
     description: leaf3_Ethernet2
   - ip_address: 2001:db8:2:7::2
-    peer_group: IPv4-UNDERLAY-PEERS
+    peer_group: IPv6-UNDERLAY-PEERS
     remote_as: '65102'
     peer: leaf4
     description: leaf4_Ethernet2
@@ -187,13 +187,13 @@ router_bgp:
       activate: true
   address_family_ipv4:
     peer_groups:
-    - name: IPv4-UNDERLAY-PEERS
+    - name: IPv6-UNDERLAY-PEERS
       activate: true
     - name: EVPN-OVERLAY-PEERS
       activate: false
   address_family_ipv6:
     peer_groups:
-    - name: IPv4-UNDERLAY-PEERS
+    - name: IPv6-UNDERLAY-PEERS
       activate: true
 service_routing_protocols_model: multi-agent
 spanning_tree:

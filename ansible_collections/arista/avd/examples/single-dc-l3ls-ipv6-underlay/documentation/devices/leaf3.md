@@ -755,15 +755,15 @@ ASN Notation: asplain
 | Send community | all |
 | Maximum routes | 0 (no limit) |
 
-##### IPv4-UNDERLAY-PEERS
+##### IPv6-UNDERLAY-PEERS
 
 | Settings | Value |
 | -------- | ----- |
-| Address Family | ipv4 |
+| Address Family | ipv6 |
 | Send community | all |
 | Maximum routes | 12000 |
 
-##### MLAG-IPv4-UNDERLAY-PEER
+##### MLAG-IPv6-UNDERLAY-PEER
 
 | Settings | Value |
 | -------- | ----- |
@@ -779,12 +779,12 @@ ASN Notation: asplain
 | -------- | --------- | --- | -------- | -------------- | -------------- | ---------- | --- | --------------------- | ---------------------- | ------- | ------------ |
 | 2001:db8:0:1::1 | 65100 | default | - | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - | Inherited from peer group EVPN-OVERLAY-PEERS | - | - | - | - |
 | 2001:db8:0:2::1 | 65100 | default | - | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - | Inherited from peer group EVPN-OVERLAY-PEERS | - | - | - | - |
-| 2001:db8:2:4::1 | 65100 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - | - | - | - |
-| 2001:db8:2:5::1 | 65100 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - | - | - | - |
-| 2001:db8:4:2::2 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | default | - | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | - | - | - | - | - | - |
-| 2001:db8:4:2::2 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | VRF10 | - | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | - | - | - | - | - | - |
-| 2001:db8:4:2::2 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | VRF11 | - | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | - | - | - | - | - | - |
-| 2001:db8:4:2::2 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | VRF12 | - | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | - | - | - | - | - | - |
+| 2001:db8:2:4::1 | 65100 | default | - | Inherited from peer group IPv6-UNDERLAY-PEERS | Inherited from peer group IPv6-UNDERLAY-PEERS | - | - | - | - | - | - |
+| 2001:db8:2:5::1 | 65100 | default | - | Inherited from peer group IPv6-UNDERLAY-PEERS | Inherited from peer group IPv6-UNDERLAY-PEERS | - | - | - | - | - | - |
+| 2001:db8:4:2::2 | Inherited from peer group MLAG-IPv6-UNDERLAY-PEER | default | - | Inherited from peer group MLAG-IPv6-UNDERLAY-PEER | Inherited from peer group MLAG-IPv6-UNDERLAY-PEER | - | - | - | - | - | - |
+| 2001:db8:4:2::2 | Inherited from peer group MLAG-IPv6-UNDERLAY-PEER | VRF10 | - | Inherited from peer group MLAG-IPv6-UNDERLAY-PEER | Inherited from peer group MLAG-IPv6-UNDERLAY-PEER | - | - | - | - | - | - |
+| 2001:db8:4:2::2 | Inherited from peer group MLAG-IPv6-UNDERLAY-PEER | VRF11 | - | Inherited from peer group MLAG-IPv6-UNDERLAY-PEER | Inherited from peer group MLAG-IPv6-UNDERLAY-PEER | - | - | - | - | - | - |
+| 2001:db8:4:2::2 | Inherited from peer group MLAG-IPv6-UNDERLAY-PEER | VRF12 | - | Inherited from peer group MLAG-IPv6-UNDERLAY-PEER | Inherited from peer group MLAG-IPv6-UNDERLAY-PEER | - | - | - | - | - | - |
 
 #### Router BGP EVPN Address Family
 
@@ -830,31 +830,31 @@ router bgp 65102
    neighbor EVPN-OVERLAY-PEERS password 7 <removed>
    neighbor EVPN-OVERLAY-PEERS send-community
    neighbor EVPN-OVERLAY-PEERS maximum-routes 0
-   neighbor IPv4-UNDERLAY-PEERS peer group
-   neighbor IPv4-UNDERLAY-PEERS password 7 <removed>
-   neighbor IPv4-UNDERLAY-PEERS send-community
-   neighbor IPv4-UNDERLAY-PEERS maximum-routes 12000
-   neighbor MLAG-IPv4-UNDERLAY-PEER peer group
-   neighbor MLAG-IPv4-UNDERLAY-PEER remote-as 65102
-   neighbor MLAG-IPv4-UNDERLAY-PEER next-hop-self
-   neighbor MLAG-IPv4-UNDERLAY-PEER description leaf4
-   neighbor MLAG-IPv4-UNDERLAY-PEER route-map RM-MLAG-PEER-IN in
-   neighbor MLAG-IPv4-UNDERLAY-PEER password 7 <removed>
-   neighbor MLAG-IPv4-UNDERLAY-PEER send-community
-   neighbor MLAG-IPv4-UNDERLAY-PEER maximum-routes 12000
+   neighbor IPv6-UNDERLAY-PEERS peer group
+   neighbor IPv6-UNDERLAY-PEERS password 7 <removed>
+   neighbor IPv6-UNDERLAY-PEERS send-community
+   neighbor IPv6-UNDERLAY-PEERS maximum-routes 12000
+   neighbor MLAG-IPv6-UNDERLAY-PEER peer group
+   neighbor MLAG-IPv6-UNDERLAY-PEER remote-as 65102
+   neighbor MLAG-IPv6-UNDERLAY-PEER next-hop-self
+   neighbor MLAG-IPv6-UNDERLAY-PEER description leaf4
+   neighbor MLAG-IPv6-UNDERLAY-PEER route-map RM-MLAG-PEER-IN in
+   neighbor MLAG-IPv6-UNDERLAY-PEER password 7 <removed>
+   neighbor MLAG-IPv6-UNDERLAY-PEER send-community
+   neighbor MLAG-IPv6-UNDERLAY-PEER maximum-routes 12000
    neighbor 2001:db8:0:1::1 peer group EVPN-OVERLAY-PEERS
    neighbor 2001:db8:0:1::1 remote-as 65100
    neighbor 2001:db8:0:1::1 description spine1_Loopback0
    neighbor 2001:db8:0:2::1 peer group EVPN-OVERLAY-PEERS
    neighbor 2001:db8:0:2::1 remote-as 65100
    neighbor 2001:db8:0:2::1 description spine2_Loopback0
-   neighbor 2001:db8:2:4::1 peer group IPv4-UNDERLAY-PEERS
+   neighbor 2001:db8:2:4::1 peer group IPv6-UNDERLAY-PEERS
    neighbor 2001:db8:2:4::1 remote-as 65100
    neighbor 2001:db8:2:4::1 description spine1_Ethernet3
-   neighbor 2001:db8:2:5::1 peer group IPv4-UNDERLAY-PEERS
+   neighbor 2001:db8:2:5::1 peer group IPv6-UNDERLAY-PEERS
    neighbor 2001:db8:2:5::1 remote-as 65100
    neighbor 2001:db8:2:5::1 description spine2_Ethernet3
-   neighbor 2001:db8:4:2::2 peer group MLAG-IPv4-UNDERLAY-PEER
+   neighbor 2001:db8:4:2::2 peer group MLAG-IPv6-UNDERLAY-PEER
    neighbor 2001:db8:4:2::2 description leaf4_Vlan4093
    redistribute connected route-map RM-CONN-2-BGP
    !
@@ -903,19 +903,19 @@ router bgp 65102
    !
    address-family ipv4
       no neighbor EVPN-OVERLAY-PEERS activate
-      neighbor IPv4-UNDERLAY-PEERS activate
-      neighbor MLAG-IPv4-UNDERLAY-PEER activate
+      neighbor IPv6-UNDERLAY-PEERS activate
+      neighbor MLAG-IPv6-UNDERLAY-PEER activate
    !
    address-family ipv6
-      neighbor IPv4-UNDERLAY-PEERS activate
-      neighbor MLAG-IPv4-UNDERLAY-PEER activate
+      neighbor IPv6-UNDERLAY-PEERS activate
+      neighbor MLAG-IPv6-UNDERLAY-PEER activate
    !
    vrf VRF10
       rd 10.255.1.3:10
       route-target import evpn 10:10
       route-target export evpn 10:10
       router-id 10.255.1.3
-      neighbor 2001:db8:4:2::2 peer group MLAG-IPv4-UNDERLAY-PEER
+      neighbor 2001:db8:4:2::2 peer group MLAG-IPv6-UNDERLAY-PEER
       neighbor 2001:db8:4:2::2 description leaf4_Vlan3009
       redistribute connected route-map RM-CONN-2-BGP-VRFS
    !
@@ -924,7 +924,7 @@ router bgp 65102
       route-target import evpn 11:11
       route-target export evpn 11:11
       router-id 10.255.1.3
-      neighbor 2001:db8:4:2::2 peer group MLAG-IPv4-UNDERLAY-PEER
+      neighbor 2001:db8:4:2::2 peer group MLAG-IPv6-UNDERLAY-PEER
       neighbor 2001:db8:4:2::2 description leaf4_Vlan3010
       redistribute connected route-map RM-CONN-2-BGP-VRFS
    !
@@ -933,7 +933,7 @@ router bgp 65102
       route-target import evpn 12:12
       route-target export evpn 12:12
       router-id 10.255.1.3
-      neighbor 2001:db8:4:2::2 peer group MLAG-IPv4-UNDERLAY-PEER
+      neighbor 2001:db8:4:2::2 peer group MLAG-IPv6-UNDERLAY-PEER
       neighbor 2001:db8:4:2::2 description leaf4_Vlan3011
       redistribute connected route-map RM-CONN-2-BGP-VRFS
 ```

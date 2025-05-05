@@ -368,11 +368,11 @@ ASN Notation: asplain
 | Send community | all |
 | Maximum routes | 0 (no limit) |
 
-##### IPv4-UNDERLAY-PEERS
+##### IPv6-UNDERLAY-PEERS
 
 | Settings | Value |
 | -------- | ----- |
-| Address Family | ipv4 |
+| Address Family | ipv6 |
 | Send community | all |
 | Maximum routes | 12000 |
 
@@ -384,10 +384,10 @@ ASN Notation: asplain
 | 2001:db8:1:2::1 | 65101 | default | - | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - | Inherited from peer group EVPN-OVERLAY-PEERS | - | - | - | - |
 | 2001:db8:1:3::1 | 65102 | default | - | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - | Inherited from peer group EVPN-OVERLAY-PEERS | - | - | - | - |
 | 2001:db8:1:4::1 | 65102 | default | - | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - | Inherited from peer group EVPN-OVERLAY-PEERS | - | - | - | - |
-| 2001:db8:2:2::2 | 65101 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - | - | - | - |
-| 2001:db8:2:4::2 | 65102 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - | - | - | - |
-| 2001:db8:2:6::2 | 65102 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - | - | - | - |
-| 2001:db8:2::2 | 65101 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - | - | - | - |
+| 2001:db8:2:2::2 | 65101 | default | - | Inherited from peer group IPv6-UNDERLAY-PEERS | Inherited from peer group IPv6-UNDERLAY-PEERS | - | - | - | - | - | - |
+| 2001:db8:2:4::2 | 65102 | default | - | Inherited from peer group IPv6-UNDERLAY-PEERS | Inherited from peer group IPv6-UNDERLAY-PEERS | - | - | - | - | - | - |
+| 2001:db8:2:6::2 | 65102 | default | - | Inherited from peer group IPv6-UNDERLAY-PEERS | Inherited from peer group IPv6-UNDERLAY-PEERS | - | - | - | - | - | - |
+| 2001:db8:2::2 | 65101 | default | - | Inherited from peer group IPv6-UNDERLAY-PEERS | Inherited from peer group IPv6-UNDERLAY-PEERS | - | - | - | - | - | - |
 
 #### Router BGP EVPN Address Family
 
@@ -413,10 +413,10 @@ router bgp 65100
    neighbor EVPN-OVERLAY-PEERS password 7 <removed>
    neighbor EVPN-OVERLAY-PEERS send-community
    neighbor EVPN-OVERLAY-PEERS maximum-routes 0
-   neighbor IPv4-UNDERLAY-PEERS peer group
-   neighbor IPv4-UNDERLAY-PEERS password 7 <removed>
-   neighbor IPv4-UNDERLAY-PEERS send-community
-   neighbor IPv4-UNDERLAY-PEERS maximum-routes 12000
+   neighbor IPv6-UNDERLAY-PEERS peer group
+   neighbor IPv6-UNDERLAY-PEERS password 7 <removed>
+   neighbor IPv6-UNDERLAY-PEERS send-community
+   neighbor IPv6-UNDERLAY-PEERS maximum-routes 12000
    neighbor 2001:db8:1:1::1 peer group EVPN-OVERLAY-PEERS
    neighbor 2001:db8:1:1::1 remote-as 65101
    neighbor 2001:db8:1:1::1 description leaf1_Loopback0
@@ -429,16 +429,16 @@ router bgp 65100
    neighbor 2001:db8:1:4::1 peer group EVPN-OVERLAY-PEERS
    neighbor 2001:db8:1:4::1 remote-as 65102
    neighbor 2001:db8:1:4::1 description leaf4_Loopback0
-   neighbor 2001:db8:2:2::2 peer group IPv4-UNDERLAY-PEERS
+   neighbor 2001:db8:2:2::2 peer group IPv6-UNDERLAY-PEERS
    neighbor 2001:db8:2:2::2 remote-as 65101
    neighbor 2001:db8:2:2::2 description leaf2_Ethernet1
-   neighbor 2001:db8:2:4::2 peer group IPv4-UNDERLAY-PEERS
+   neighbor 2001:db8:2:4::2 peer group IPv6-UNDERLAY-PEERS
    neighbor 2001:db8:2:4::2 remote-as 65102
    neighbor 2001:db8:2:4::2 description leaf3_Ethernet1
-   neighbor 2001:db8:2:6::2 peer group IPv4-UNDERLAY-PEERS
+   neighbor 2001:db8:2:6::2 peer group IPv6-UNDERLAY-PEERS
    neighbor 2001:db8:2:6::2 remote-as 65102
    neighbor 2001:db8:2:6::2 description leaf4_Ethernet1
-   neighbor 2001:db8:2::2 peer group IPv4-UNDERLAY-PEERS
+   neighbor 2001:db8:2::2 peer group IPv6-UNDERLAY-PEERS
    neighbor 2001:db8:2::2 remote-as 65101
    neighbor 2001:db8:2::2 description leaf1_Ethernet1
    redistribute connected route-map RM-CONN-2-BGP
@@ -448,10 +448,10 @@ router bgp 65100
    !
    address-family ipv4
       no neighbor EVPN-OVERLAY-PEERS activate
-      neighbor IPv4-UNDERLAY-PEERS activate
+      neighbor IPv6-UNDERLAY-PEERS activate
    !
    address-family ipv6
-      neighbor IPv4-UNDERLAY-PEERS activate
+      neighbor IPv6-UNDERLAY-PEERS activate
 ```
 
 ## BFD
