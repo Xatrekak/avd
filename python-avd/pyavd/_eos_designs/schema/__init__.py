@@ -8405,6 +8405,7 @@ class EosDesigns(EosDesignsRootModel):
                 "python_module": {"type": str},
                 "python_class_name": {"type": str, "default": "AvdIpAddressing"},
                 "router_id": {"type": str},
+                "router_id_ipv6": {"type": str},
                 "mlag_ip_primary": {"type": str},
                 "mlag_ip_secondary": {"type": str},
                 "mlag_l3_ip_primary": {"type": str},
@@ -8426,6 +8427,7 @@ class EosDesigns(EosDesignsRootModel):
             """
             router_id: str | None
             """Path to Custom J2 template."""
+            router_id_ipv6: str | None
             mlag_ip_primary: str | None
             """Path to Custom J2 template."""
             mlag_ip_secondary: str | None
@@ -8455,6 +8457,7 @@ class EosDesigns(EosDesignsRootModel):
                     python_module: str | None | UndefinedType = Undefined,
                     python_class_name: str | UndefinedType = Undefined,
                     router_id: str | None | UndefinedType = Undefined,
+                    router_id_ipv6: str | None | UndefinedType = Undefined,
                     mlag_ip_primary: str | None | UndefinedType = Undefined,
                     mlag_ip_secondary: str | None | UndefinedType = Undefined,
                     mlag_l3_ip_primary: str | None | UndefinedType = Undefined,
@@ -8476,6 +8479,7 @@ class EosDesigns(EosDesignsRootModel):
                         python_module: Custom Python Module to import for IP addressing.
                         python_class_name: Name of Custom Python Class to import for IP addressing.
                         router_id: Path to Custom J2 template.
+                        router_id_ipv6: router_id_ipv6
                         mlag_ip_primary: Path to Custom J2 template.
                         mlag_ip_secondary: Path to Custom J2 template.
                         mlag_l3_ip_primary: Path to Custom J2 template.
@@ -9027,6 +9031,7 @@ class EosDesigns(EosDesignsRootModel):
                 "python_module": {"type": str},
                 "python_class_name": {"type": str, "default": "AvdIpAddressing"},
                 "router_id": {"type": str},
+                "router_id_ipv6": {"type": str},
                 "mlag_ip_primary": {"type": str},
                 "mlag_ip_secondary": {"type": str},
                 "mlag_l3_ip_primary": {"type": str},
@@ -9048,6 +9053,7 @@ class EosDesigns(EosDesignsRootModel):
             """
             router_id: str | None
             """Path to Custom J2 template."""
+            router_id_ipv6: str | None
             mlag_ip_primary: str | None
             """Path to Custom J2 template."""
             mlag_ip_secondary: str | None
@@ -9077,6 +9083,7 @@ class EosDesigns(EosDesignsRootModel):
                     python_module: str | None | UndefinedType = Undefined,
                     python_class_name: str | UndefinedType = Undefined,
                     router_id: str | None | UndefinedType = Undefined,
+                    router_id_ipv6: str | None | UndefinedType = Undefined,
                     mlag_ip_primary: str | None | UndefinedType = Undefined,
                     mlag_ip_secondary: str | None | UndefinedType = Undefined,
                     mlag_l3_ip_primary: str | None | UndefinedType = Undefined,
@@ -9098,6 +9105,7 @@ class EosDesigns(EosDesignsRootModel):
                         python_module: Custom Python Module to import for IP addressing.
                         python_class_name: Name of Custom Python Class to import for IP addressing.
                         router_id: Path to Custom J2 template.
+                        router_id_ipv6: router_id_ipv6
                         mlag_ip_primary: Path to Custom J2 template.
                         mlag_ip_secondary: Path to Custom J2 template.
                         mlag_l3_ip_primary: Path to Custom J2 template.
